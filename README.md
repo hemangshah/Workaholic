@@ -6,8 +6,12 @@ A Github's like work timeline.
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape.png">
 
 ToDos:
-- [ ] Orientation Support
-- [ ] Dynamic Log Box
-- [ ] A selectable timeline
-- [ ] Code Refactoring
-- [ ] Many other things!
+- [ ] Dynamic Log Box for No. of days in a month.
+- [ ] Dynamic Months label width for No. of days in a month.
+- [ ] Customization Options.
+- [ ] Orientation Support.
+- [ ] A selectable timeline.
+- [ ] Code Refactoring.
+- [ ] Many many things!
+
+You can [watch](https://github.com/hemangshah/Workaholic/subscription) to **Workaholic** to see continuous updates. Stay tuned.
