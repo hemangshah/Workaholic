@@ -1,0 +1,330 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F1BBB2CF1EE536B900DF8157 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2CE1EE536B900DF8157 /* AppDelegate.swift */; };
+		F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2D01EE536B900DF8157 /* ViewController.swift */; };
+		F1BBB2D41EE536B900DF8157 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D21EE536B900DF8157 /* Main.storyboard */; };
+		F1BBB2D61EE536B900DF8157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D51EE536B900DF8157 /* Assets.xcassets */; };
+		F1BBB2D91EE536B900DF8157 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D71EE536B900DF8157 /* LaunchScreen.storyboard */; };
+		F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */; };
+		F1BBB2E41EE5374E00DF8157 /* WHTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */; };
+		F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */; };
+		F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F1BBB2CB1EE536B900DF8157 /* Workaholic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workaholic.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1BBB2CE1EE536B900DF8157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F1BBB2D01EE536B900DF8157 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F1BBB2D31EE536B900DF8157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F1BBB2D51EE536B900DF8157 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1BBB2D81EE536B900DF8157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F1BBB2DA1EE536B900DF8157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHWorkView.swift; sourceTree = "<group>"; };
+		F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHTimeView.swift; sourceTree = "<group>"; };
+		F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
+		F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F1BBB2C81EE536B900DF8157 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F1BBB2C21EE536B900DF8157 = {
+			isa = PBXGroup;
+			children = (
+				F1BBB2CD1EE536B900DF8157 /* Workaholic */,
+				F1BBB2CC1EE536B900DF8157 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F1BBB2CC1EE536B900DF8157 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F1BBB2CB1EE536B900DF8157 /* Workaholic.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F1BBB2CD1EE536B900DF8157 /* Workaholic */ = {
+			isa = PBXGroup;
+			children = (
+				F1BBB2E01EE536E900DF8157 /* Workaholic */,
+				F1BBB2CE1EE536B900DF8157 /* AppDelegate.swift */,
+				F1BBB2D01EE536B900DF8157 /* ViewController.swift */,
+				F1BBB2D21EE536B900DF8157 /* Main.storyboard */,
+				F1BBB2D51EE536B900DF8157 /* Assets.xcassets */,
+				F1BBB2D71EE536B900DF8157 /* LaunchScreen.storyboard */,
+				F1BBB2DA1EE536B900DF8157 /* Info.plist */,
+			);
+			path = Workaholic;
+			sourceTree = "<group>";
+		};
+		F1BBB2E01EE536E900DF8157 /* Workaholic */ = {
+			isa = PBXGroup;
+			children = (
+				F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */,
+				F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */,
+				F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */,
+				F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */,
+			);
+			path = Workaholic;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F1BBB2CA1EE536B900DF8157 /* Workaholic */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F1BBB2DD1EE536B900DF8157 /* Build configuration list for PBXNativeTarget "Workaholic" */;
+			buildPhases = (
+				F1BBB2C71EE536B900DF8157 /* Sources */,
+				F1BBB2C81EE536B900DF8157 /* Frameworks */,
+				F1BBB2C91EE536B900DF8157 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Workaholic;
+			productName = Workaholic;
+			productReference = F1BBB2CB1EE536B900DF8157 /* Workaholic.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F1BBB2C31EE536B900DF8157 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = "Hemang Shah";
+				TargetAttributes = {
+					F1BBB2CA1EE536B900DF8157 = {
+						CreatedOnToolsVersion = 8.3;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = F1BBB2C61EE536B900DF8157 /* Build configuration list for PBXProject "Workaholic" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F1BBB2C21EE536B900DF8157;
+			productRefGroup = F1BBB2CC1EE536B900DF8157 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F1BBB2CA1EE536B900DF8157 /* Workaholic */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F1BBB2C91EE536B900DF8157 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1BBB2D91EE536B900DF8157 /* LaunchScreen.storyboard in Resources */,
+				F1BBB2D61EE536B900DF8157 /* Assets.xcassets in Resources */,
+				F1BBB2D41EE536B900DF8157 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F1BBB2C71EE536B900DF8157 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */,
+				F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */,
+				F1BBB2E41EE5374E00DF8157 /* WHTimeView.swift in Sources */,
+				F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */,
+				F1BBB2CF1EE536B900DF8157 /* AppDelegate.swift in Sources */,
+				F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F1BBB2D21EE536B900DF8157 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1BBB2D31EE536B900DF8157 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F1BBB2D71EE536B900DF8157 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F1BBB2D81EE536B900DF8157 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F1BBB2DB1EE536B900DF8157 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F1BBB2DC1EE536B900DF8157 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F1BBB2DE1EE536B900DF8157 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Workaholic/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemangshah.Workaholic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F1BBB2DF1EE536B900DF8157 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Workaholic/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.hemangshah.Workaholic;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F1BBB2C61EE536B900DF8157 /* Build configuration list for PBXProject "Workaholic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1BBB2DB1EE536B900DF8157 /* Debug */,
+				F1BBB2DC1EE536B900DF8157 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F1BBB2DD1EE536B900DF8157 /* Build configuration list for PBXNativeTarget "Workaholic" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F1BBB2DE1EE536B900DF8157 /* Debug */,
+				F1BBB2DF1EE536B900DF8157 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F1BBB2C31EE536B900DF8157 /* Project object */;
+}
