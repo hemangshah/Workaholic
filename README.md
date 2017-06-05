@@ -8,10 +8,12 @@ A Github's like work timeline.
 ToDos:
 - [ ] Dynamic Log Box for No. of days in a month.
 - [ ] Dynamic Months label width for No. of days in a month.
-- [ ] Customization Options.
+- [ ] Show Days to Left.
 - [ ] Orientation Support.
 - [ ] A selectable timeline.
+- [ ] Correct UI.
 - [ ] Code Refactoring.
+- [ ] Customization Options.
 - [ ] Many many things!
 
 You can [watch](https://github.com/hemangshah/Workaholic/subscription) to **Workaholic** to see continuous updates. Stay tuned.
