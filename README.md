@@ -3,6 +3,8 @@ A Github's like work timeline.
 
 <b>Attentions:</b> This repo is currently in development state, possiblity it will be having a lot changes to make it a perfect look a like of Github's owned timeline component on your profile. 
 
+<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape.png">
+
 ToDos:
 - [ ] Orientation Support
 - [ ] Dynamic Log Box
