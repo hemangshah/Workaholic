@@ -27,9 +27,6 @@ class WHWorkView : UIView {
     
     var logColorsArray = Array<UIColor>()
     
-    var storedLogBoxSize:CGSize?
-    var storedLogBoxPointY:CGFloat?
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
@@ -56,8 +53,6 @@ class WHWorkView : UIView {
         let logBoxWidth = ((self.getMyWidth() - (numberOfColumnsInEachRow * margin) - margin)/numberOfColumnsInEachRow)
         let logBoxSize = CGSize.init(width: logBoxWidth, height: logBoxWidth)
         
-        storedLogBoxSize = logBoxSize
-        
         var logBoxPointX = margin
         var logBoxPointY = valueStandardHeightForTimeView + margin
         
@@ -73,7 +68,7 @@ class WHWorkView : UIView {
             logBoxPointY = logBoxPointY + logBoxSize.height + margin
         }
         
-        storedLogBoxPointY = logBoxPointY
+        self.addHelper(withLogBoxPointY: logBoxPointY, withLogBoxSize: logBoxSize)
     }
     
     fileprivate func addLogColors() -> Void {
@@ -84,11 +79,11 @@ class WHWorkView : UIView {
         logColorsArray.append(hundreadPercentageLoggedColor)
     }
     
-    fileprivate func addHelper() -> Void {
+    fileprivate func addHelper(withLogBoxPointY storedLogBoxPointY:CGFloat, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
         let margin:CGFloat = 2.0
         let numberOfColors = logColorsArray.count
 
-        let helpLabelLess = UILabel.init(frame: CGRect.init(x: margin, y: storedLogBoxPointY! + margin, width: 30.0, height: 10.0))
+        let helpLabelLess = UILabel.init(frame: CGRect.init(x: margin, y: storedLogBoxPointY + margin, width: 30.0, height: 10.0))
         helpLabelLess.text = "Less"
         helpLabelLess.font = UIFont.systemFont(ofSize: 8.0)
         self.addSubview(helpLabelLess)
@@ -96,22 +91,22 @@ class WHWorkView : UIView {
         var helperBoxPointX:CGFloat = helpLabelLess.frame.size.width + margin
         
         for index in 0..<numberOfColors {
-            let helpLabel = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: storedLogBoxPointY! + margin, width: (storedLogBoxSize?.width)!, height: (storedLogBoxSize?.height)!))
+            let helpLabel = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: storedLogBoxPointY + margin, width: storedLogBoxSize.width, height: storedLogBoxSize.height))
             helpLabel.backgroundColor = logColorsArray[index]
             self.addSubview(helpLabel)
             helperBoxPointX = helperBoxPointX + helpLabel.frame.size.width + margin
         }
         
-        let helpLabelMore = UILabel.init(frame: CGRect.init(x: helperBoxPointX + margin, y: storedLogBoxPointY! + margin, width: 30.0, height: 10.0))
+        let helpLabelMore = UILabel.init(frame: CGRect.init(x: helperBoxPointX + margin, y: storedLogBoxPointY + margin, width: 30.0, height: 10.0))
         helpLabelMore.text = "More"
         helpLabelMore.font = UIFont.systemFont(ofSize: 8.0)
         self.addSubview(helpLabelMore)
     }
     
+    //MARK: Setup Everything!
     public func setup() -> Void {
         self.addLogColors()
         self.addTimeView()
         self.addWorkLogs()
-        self.addHelper()
     }
 }
