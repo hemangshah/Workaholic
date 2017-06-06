@@ -1,5 +1,10 @@
 # Workaholic
+
 A Github's like work timeline.
+
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
+![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
+![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
 
 <b>Attention:</b> This repo is currently in development state, possiblity it will be having a lot changes to make it a perfect look a like and operations of Github's owned timeline component on your profile. 
 
