@@ -21,7 +21,5 @@ class ViewController: UIViewController {
         let workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
         workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
         self.view.addSubview(workView)
-        
-        workView.layer.borderWidth = 1.0
     }
 }

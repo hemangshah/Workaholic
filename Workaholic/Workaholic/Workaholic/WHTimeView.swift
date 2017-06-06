@@ -29,7 +29,7 @@ class WHTimeView : UIView {
         var monthLabelPointX:CGFloat = 0.0
         let monthLabelPointY:CGFloat = 0.0
         
-        let monthLabelColor = UIColor.black
+        let monthLabelColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         
         let convertTotalMonths:NSInteger = NSInteger(totalMonths)
         
@@ -60,7 +60,7 @@ class WHTimeView : UIView {
             let monthLabel = UILabel.init(frame: CGRect.init(x: monthLabelPointX, y: monthLabelPointY, width: monthLabelWidth, height: monthLabelHeight))
             let date = realDateArray[monthIndex]
             monthLabel.text = date.toString(style: .shortMonth)
-            monthLabel.font = UIFont.boldSystemFont(ofSize: 10.0)
+            monthLabel.font = UIFont.systemFont(ofSize: 10.0)
             monthLabel.textColor = monthLabelColor
             monthLabel.backgroundColor = UIColor.clear
             monthLabel.textAlignment = .center
