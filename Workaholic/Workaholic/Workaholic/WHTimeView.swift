@@ -35,6 +35,7 @@ class WHTimeView : UIView {
         
         let nowYear = Date.init()
         let nowYearString = nowYear.toString(format: .isoYear)
+        
         var dateArray = Array<String>()
         var realDateArray = Array<Date>()
         
@@ -54,7 +55,6 @@ class WHTimeView : UIView {
         for index in 0..<dateArray.count {
             let date = Date.init(fromString: dateArray[index], format: .custom("dd-MM-yyyy"))
             realDateArray.append(date!)
-            print(date!.toString(style: .shortMonth) as Any)
         }
         
         for monthIndex in 0..<convertTotalMonths {

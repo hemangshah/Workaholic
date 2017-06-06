@@ -17,7 +17,7 @@ class ViewController: UIViewController {
         let marging:CGFloat = 20.0
         let topMargin:CGFloat = 80.0
         let width:CGFloat = UIScreen.main.bounds.size.width - (marging * 2.0)
-        let height:CGFloat = 115.0//185.0
+        let height:CGFloat = 140.0 //115.0
         let workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
         workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
         self.view.addSubview(workView)
