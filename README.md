@@ -1,6 +1,6 @@
 # Workaholic
 
-A Github's like work timeline.
+A Github's like work contribution timeline.
 
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
