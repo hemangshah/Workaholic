@@ -12,7 +12,7 @@ class WHTimeView : UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = UIColor.white
+        self.backgroundColor = UIColor.clear
         self.addTimeLabels()
     }
     
@@ -64,7 +64,6 @@ class WHTimeView : UIView {
             monthLabel.textColor = monthLabelColor
             monthLabel.backgroundColor = UIColor.clear
             monthLabel.textAlignment = .center
-//            monthLabel.layer.borderWidth = 0.50
             self.addSubview(monthLabel)
             monthLabelPointX = monthLabelPointX + monthLabel.frame.size.width
         }
