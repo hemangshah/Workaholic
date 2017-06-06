@@ -37,6 +37,7 @@ class WHTimeView : UIView {
         let nowYearString = nowYear.toString(format: .isoYear)
         var dateArray = Array<String>()
         var realDateArray = Array<Date>()
+        
         dateArray.append("01-01-\(nowYearString)")
         dateArray.append("01-02-\(nowYearString)")
         dateArray.append("01-03-\(nowYearString)")

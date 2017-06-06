@@ -42,19 +42,21 @@ class WHWorkView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func addTimeView() -> Void {
-        let rect = CGRect.init(x: 0.0, y: 0.0, width: self.getMyWidth(), height: valueStandardHeightForTimeView)
+    fileprivate func addTimeView(withInitialMargin margin:CGFloat) -> Void {
+        let rect = CGRect.init(x: margin, y: 0.0, width: self.getMyWidth() - margin, height: valueStandardHeightForTimeView)
         let timeView = WHTimeView.init(frame: rect)
         self.addSubview(timeView)
     }
     
     fileprivate func addWorkLogs() -> Void {
-        let initialMarging:CGFloat = 35.0
+        let initialMargin:CGFloat = 35.0
         let margin:CGFloat = 2.0
         let numberOfLogsInColumn = 7
-        
-        var logBoxPointX = initialMarging + margin
+
+        var logBoxPointX = initialMargin + margin
         var logBoxPointY = valueStandardHeightForTimeView + margin
+        
+        self.addTimeView(withInitialMargin: logBoxPointX)
         
         //Why 36? 12 months. Each month X 3 columns.
         let numberOfColumnsInEachRow:CGFloat = 12.0 * 3.0
@@ -73,7 +75,7 @@ class WHWorkView : UIView {
             
             //Labels: Days : Mon / Wed / Fri
             if rowIndex % 2 == 0 {
-                let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMarging - (margin * 2.0), height: logBoxSize.height))
+                let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: logBoxSize.height))
                 
                 if rowIndex == 2 {
                     daysLabel.text = "Mon"
@@ -92,7 +94,7 @@ class WHWorkView : UIView {
                 self.addSubview(daysLabel)
             }
             
-            logBoxPointX = initialMarging + margin
+            logBoxPointX = initialMargin + margin
             logBoxPointY = logBoxPointY + logBoxSize.height + margin
         }
         
@@ -153,7 +155,6 @@ class WHWorkView : UIView {
     //MARK: Setup Everything!
     public func setup() -> Void {
         self.addLogColors()
-        self.addTimeView()
         self.addWorkLogs()
     }
 }
