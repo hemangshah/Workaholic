@@ -15,7 +15,7 @@ fileprivate extension Array {
     }
 }
 
-let valueStandardWidthForHelperView:CGFloat = 110.0
+let valueStandardWidthForHelperView:CGFloat = 105.0
 
 let valueStandardHeightForTimeView:CGFloat = 25.0
 let valueStandardHeightForHelperView:CGFloat = 25.0
@@ -49,17 +49,19 @@ class WHWorkView : UIView {
     }
     
     fileprivate func addWorkLogs() -> Void {
+        let initialMarging:CGFloat = 35.0
         let margin:CGFloat = 2.0
         let numberOfLogsInColumn = 7
         
-        //Why 36? 12 months. Each month X 3 columns.
-        let numberOfColumnsInEachRow:CGFloat = 12.0 * 3.0
-        let logBoxWidthAndHeight = ((self.getMyWidth() - (numberOfColumnsInEachRow * margin) - margin)/numberOfColumnsInEachRow)
-        let logBoxSize = CGSize.init(width: logBoxWidthAndHeight, height: logBoxWidthAndHeight)
-        
-        var logBoxPointX = margin
+        var logBoxPointX = initialMarging + margin
         var logBoxPointY = valueStandardHeightForTimeView + margin
         
+        //Why 36? 12 months. Each month X 3 columns.
+        let numberOfColumnsInEachRow:CGFloat = 12.0 * 3.0
+        
+        let logBoxWidthAndHeight = ((self.getMyWidth() - (numberOfColumnsInEachRow * margin) - logBoxPointX)/numberOfColumnsInEachRow)
+        let logBoxSize = CGSize.init(width: logBoxWidthAndHeight, height: logBoxWidthAndHeight)
+
         let convertNumberOfColumnsInEachRow:NSInteger = NSInteger(numberOfColumnsInEachRow)
         for rowIndex in 1...numberOfLogsInColumn {
             for columnIndex in 1...convertNumberOfColumnsInEachRow {
@@ -68,7 +70,29 @@ class WHWorkView : UIView {
                 self.addSubview(workLabel)
                 logBoxPointX = logBoxPointX + logBoxSize.width + margin
             }
-            logBoxPointX = margin
+            
+            //Labels: Days : Mon / Wed / Fri
+            if rowIndex % 2 == 0 {
+                let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMarging - (margin * 2.0), height: logBoxSize.height))
+                
+                if rowIndex == 2 {
+                    daysLabel.text = "Mon"
+                    
+                } else if rowIndex == 4 {
+                    daysLabel.text = "Wed"
+                    
+                } else if rowIndex == 6 {
+                    daysLabel.text = "Fri"
+                }
+                
+                daysLabel.backgroundColor = UIColor.clear
+                daysLabel.textAlignment = .right
+                daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+                daysLabel.font = UIFont.systemFont(ofSize: 8.0)
+                self.addSubview(daysLabel)
+            }
+            
+            logBoxPointX = initialMarging + margin
             logBoxPointY = logBoxPointY + logBoxSize.height + margin
         }
         
@@ -97,9 +121,11 @@ class WHWorkView : UIView {
         self.addSubview(helperView)
 
         //Label: Less
-        let helpLabelLess = UILabel.init(frame: CGRect.init(x: margin, y: 0.0 + margin, width: 30.0, height: 10.0))
+        let helpLabelLess = UILabel.init(frame: CGRect.init(x: margin, y: 0.0 + margin, width: 25.0, height: 10.0))
+        helpLabelLess.backgroundColor = UIColor.clear
         helpLabelLess.text = "Less"
         helpLabelLess.font = UIFont.systemFont(ofSize: 8.0)
+        helpLabelLess.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         helperView.addSubview(helpLabelLess)
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
@@ -115,9 +141,11 @@ class WHWorkView : UIView {
         }
         
         //Label: More
-        let helpLabelMore = UILabel.init(frame: CGRect.init(x: helperBoxPointX + margin, y: 0.0 + margin, width: 30.0, height: 10.0))
+        let helpLabelMore = UILabel.init(frame: CGRect.init(x: helperBoxPointX + margin, y: 0.0 + margin, width: 25.0, height: 10.0))
+        helpLabelMore.backgroundColor = UIColor.clear
         helpLabelMore.text = "More"
         helpLabelMore.font = UIFont.systemFont(ofSize: 8.0)
+        helpLabelMore.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
         helperView.addSubview(helpLabelMore)
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
