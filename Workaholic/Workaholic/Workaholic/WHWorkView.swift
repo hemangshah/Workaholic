@@ -69,82 +69,124 @@ class WHWorkView : UIView {
         
         var totalColumns = Array<NSInteger>()
         
+        //TODO: This should be dynamic.
         let nowYear = Date.init()
+        let previousYear = nowYear - 1.year
         let nowYearString = nowYear.toString(format: .isoYear)
+        let prevYearString = previousYear!.toString(format: .isoYear)
         
         for monthIndex in startMonth...totalMonths {
-            let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(2016)", format: .custom("dd-M-yyyy"))
+            let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
             let numberOfDaysInMonth = NSInteger(dateOfMonth!.numberOfDaysInMonth())
             totalColumns.append(numberOfDaysInMonth)
         }
         //End - Calculating Box Sizes.
         
-        let numberOfColumnsInEachRow:CGFloat = CGFloat(totalColumns.reduce(0, +)/numberOfLogsInColumn)
+        let totalLogBoxes = totalColumns.reduce(0, +) + 5
+        let numberOfColumnsInEachRow:CGFloat = CGFloat(totalLogBoxes/numberOfLogsInColumn)
         
         let logBoxWidthAndHeight:CGFloat = ((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow)
         let logBoxSize = CGSize.init(width: logBoxWidthAndHeight, height: logBoxWidthAndHeight)
         
+        //------------------------------------------------------------------------
         //Start – Add Log Box
         
-        var rowIndex = 1
+        var rowIndex = 0
         var logsInColumnCounter = 1
-
-        for monthIndex in startMonth...totalMonths {
-            
-            let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
-            let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
-            print("\((dateOfMonth!.toString(style: .shortMonth))) has \(numberOfDaysInMonth) days.")
-
-            //Start – Internal Loop
-            for columnIndex in 1...numberOfDaysInMonth {
-                let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
-                workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
-                workLabel.text = "\(columnIndex)"
-                workLabel.textAlignment = .center
-                workLabel.font = UIFont.systemFont(ofSize: 3)
-                self.addSubview(workLabel)
+        
+        for monthIndex in 0...totalMonths {
+            if monthIndex == 0 {
+                let dateOfMonth = Date.init(fromString: "01-1-\(prevYearString)", format: .custom("dd-M-yyyy"))
+                let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
+                print("\((dateOfMonth!.toString(style: .shortMonth))) has \(numberOfDaysInMonth) days.")
                 
-                if logsInColumnCounter % numberOfLogsInColumn == 0 {
-                    logBoxPointX = logBoxPointX + logBoxSize.width + margin
-                    logBoxPointY = valueStandardHeightForTimeView + margin
-                    logsInColumnCounter = 1
-                } else {
-                    logBoxPointY = logBoxPointY + logBoxSize.height + margin
-                    rowIndex = rowIndex + 1
-                    logsInColumnCounter = logsInColumnCounter + 1
-                }
-
-                //Start - Days Label
-                //Labels: Mon / Wed / Fri
-                if rowIndex % 2 == 0 {
-                    let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: logBoxSize.height))
+                //Why remainingDays? (371 (53 columns * 7) - 366 days) = 5 days
+                let remainingDays = 371 - dateOfMonth!.numberOfDaysInYear()
+                let previousYearDate = dateOfMonth! - remainingDays.days
+                
+                //------------------------------------------------------------------------
+                //Start – Internal Loop
+                for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
+                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
+                    workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
+                    workLabel.text = "\(columnIndex)"
+                    workLabel.textAlignment = .center
+                    workLabel.font = UIFont.systemFont(ofSize: 3)
+                    self.addSubview(workLabel)
                     
-                    if rowIndex == 2 {
-                        daysLabel.text = "Mon"
-                        
-                    } else if rowIndex == 4 {
-                        daysLabel.text = "Wed"
-                        
-                    } else if rowIndex == 6 {
-                        daysLabel.text = "Fri"
+                    if logsInColumnCounter % numberOfLogsInColumn == 0 {
+                        logBoxPointX = logBoxPointX + logBoxSize.width + margin
+                        logBoxPointY = valueStandardHeightForTimeView + margin
+                        logsInColumnCounter = 1
+                    } else {
+                        logBoxPointY = logBoxPointY + logBoxSize.height + margin
+                        logsInColumnCounter = logsInColumnCounter + 1
+                    }
+                }
+                //End – Internal Loop
+                //------------------------------------------------------------------------
+                
+            } else {
+                
+                let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
+                let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
+                print("\((dateOfMonth!.toString(style: .shortMonth))) has \(numberOfDaysInMonth) days.")
+                
+                //------------------------------------------------------------------------
+                //Start – Internal Loop
+                for columnIndex in 1...numberOfDaysInMonth {
+                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
+                    workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
+                    workLabel.text = "\(columnIndex)"
+                    workLabel.textAlignment = .center
+                    workLabel.font = UIFont.systemFont(ofSize: 3)
+                    self.addSubview(workLabel)
+                    
+                    if logsInColumnCounter % numberOfLogsInColumn == 0 {
+                        logBoxPointX = logBoxPointX + logBoxSize.width + margin
+                        logBoxPointY = valueStandardHeightForTimeView + margin
+                        logsInColumnCounter = 1
+                    } else {
+                        logBoxPointY = logBoxPointY + logBoxSize.height + margin
+                        rowIndex = rowIndex + 1
+                        logsInColumnCounter = logsInColumnCounter + 1
                     }
                     
-                    daysLabel.backgroundColor = UIColor.clear
-                    daysLabel.textAlignment = .right
-                    daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-                    daysLabel.font = UIFont.systemFont(ofSize: 8.0)
-                    self.addSubview(daysLabel)
+                    //------------------------------------------------------------------------
+                    //Start - Days Label
+                    //Labels: Mon / Wed / Fri
+                    if rowIndex % 2 == 0 {
+                        let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: logBoxSize.height))
+                        
+                        if rowIndex == 2 {
+                            daysLabel.text = "Mon"
+                            
+                        } else if rowIndex == 4 {
+                            daysLabel.text = "Wed"
+                            
+                        } else if rowIndex == 6 {
+                            daysLabel.text = "Fri"
+                        }
+                        
+                        daysLabel.backgroundColor = UIColor.clear
+                        daysLabel.textAlignment = .right
+                        daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+                        daysLabel.font = UIFont.systemFont(ofSize: 8.0)
+                        self.addSubview(daysLabel)
+                    }
+                    //End - Days Label
+                    //------------------------------------------------------------------------
+                    
                 }
-                //End - Days Label
-                
+                //End – Internal Loop
+                //------------------------------------------------------------------------
             }
-            //End – Internal Loop
-            
         }
         
         //End – Add Log Box
+        //------------------------------------------------------------------------
         
-        self.addHelper(withLogBoxPointY: logBoxPointY + (CGFloat(numberOfLogsInColumn) * logBoxSize.height), withLogBoxSize: logBoxSize)
+        self.addHelper(withLogBoxPointY: logBoxPointY + (CGFloat(numberOfLogsInColumn) * logBoxSize.height) + margin, withLogBoxSize: logBoxSize)
     }
     
     //MARK: Add Logging Colors

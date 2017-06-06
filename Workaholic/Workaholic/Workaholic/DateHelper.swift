@@ -463,6 +463,11 @@ public extension Date {
         return range.upperBound - range.lowerBound
     }
     
+    func numberOfDaysInYear() -> Int {
+        let range = Calendar.current.range(of: Calendar.Component.day, in: Calendar.Component.year, for: self)!
+        return range.upperBound - range.lowerBound
+    }
+    
     func firstDayOfWeek() -> Int {
         let distanceToStartOfWeek = Date.dayInSeconds * Double(self.component(.weekday)! - 1)
         let interval: TimeInterval = self.timeIntervalSinceReferenceDate - distanceToStartOfWeek
