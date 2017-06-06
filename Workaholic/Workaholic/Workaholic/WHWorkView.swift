@@ -61,10 +61,10 @@ class WHWorkView : UIView {
         var logBoxPointY = valueStandardHeightForTimeView + margin
         
         let convertNumberOfColumnsInEachRow:NSInteger = NSInteger(numberOfColumnsInEachRow)
-        for _ in 1...numberOfLogsInColumn {
-            for _ in 1...convertNumberOfColumnsInEachRow {
+        for rowIndex in 1...numberOfLogsInColumn {
+            for columnIndex in 1...convertNumberOfColumnsInEachRow {
                 let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
-                workLabel.backgroundColor = logColorsArray.randomColor
+                workLabel.backgroundColor = (rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor
                 self.addSubview(workLabel)
                 logBoxPointX = logBoxPointX + logBoxSize.width + margin
             }
