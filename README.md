@@ -3,15 +3,15 @@ A Github's like work timeline.
 
 <b>Attention:</b> This repo is currently in development state, possiblity it will be having a lot changes to make it a perfect look a like and operations of Github's owned timeline component on your profile. 
 
-<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape.png">
+<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHPortrait.png">
 
 ToDos:
 - [ ] Dynamic Log Box for No. of days in a month.
 - [ ] Dynamic Months label width for No. of days in a month.
-- [ ] Show Days to Left.
+- [x] Show Days to Left.
 - [ ] Orientation Support.
 - [ ] A selectable timeline.
-- [ ] Correct UI.
+- [x] Correct UI.
 - [ ] Code Refactoring.
 - [ ] Customization Options.
 - [ ] Many many things!
