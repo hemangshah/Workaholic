@@ -36,7 +36,6 @@ class WHWorkView : UIView {
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGray.cgColor
-        self.setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -62,30 +61,36 @@ class WHWorkView : UIView {
         let numberOfColumnsInEachRow:Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
 
         let logBoxWidthAndHeight:Double = floor(((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
-        print(logBoxWidthAndHeight)
+        
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
         
         //------------------------------------------------------------------------
         //Start – Add Log Boxes
-        
-        var rowIndex = 0
+
+        var rowIndex = (nowYear.numberOfDaysInYear() == 366) ? 0 : 1
         var logsInColumnCounter = 1
-        
         var previousMonth = 0
+        
         for monthIndex in 0...totalMonths {
             
             //monthIndex = 0 because we have to show the days from previous year.
             
             if monthIndex == 0 {
                 //Why remainingDays? (371 (53 columns * 7) - 366 days) = 5 days
-                let remainingDays = 371 - nowYear.numberOfDaysInYear()
+                //We may add 53 logs in a row.
+                let columns = (52 * Double(numberOfLogsInColumn)) + Double(arc4random_uniform(UInt32(7) - UInt32(1)) + UInt32(1))
+                var remainingDays = Int(columns - Double(nowYear.numberOfDaysInYear()))
+                if remainingDays <= 0 {
+                    remainingDays = 2
+                }
+//                let remainingDays = 371 - nowYear.numberOfDaysInYear()
                 let previousYearDate = nowYear - remainingDays.days
                 
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
                     let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
+                    workLabel.backgroundColor = zeroPercentageLoggedColor
                     workLabel.text = "\(columnIndex)"
                     workLabel.textAlignment = .center
                     workLabel.font = UIFont.systemFont(ofSize: 3)
@@ -112,7 +117,7 @@ class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
                     let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
+                    workLabel.backgroundColor = zeroPercentageLoggedColor
                     workLabel.text = "\(columnIndex)"
                     workLabel.textAlignment = .center
                     workLabel.font = UIFont.systemFont(ofSize: 3)
@@ -232,6 +237,7 @@ class WHWorkView : UIView {
     
     //MARK: Add Logging Colors
     fileprivate func addLogColors() -> Void {
+        logColorsArray.removeAll()
         logColorsArray.append(zeroPercentageLoggedColor)
         logColorsArray.append(twenty5percentageLoggedColor)
         logColorsArray.append(fiftyPercentageLoggedColor)
@@ -285,8 +291,15 @@ class WHWorkView : UIView {
     }
     
     //MARK: Setup Everything!
-    public func setup() -> Void {
+    public func setup(withYear year:Int) -> Void {
+        clearExistingWHView()
         self.addLogColors()
-        self.addWorkLogs(forYear: 2016)
+        self.addWorkLogs(forYear: year)
+    }
+    
+    fileprivate func clearExistingWHView() -> Void {
+        for allTheSubviews in self.subviews {
+            allTheSubviews.removeFromSuperview()
+        }
     }
 }
