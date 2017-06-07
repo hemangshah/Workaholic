@@ -63,11 +63,44 @@ class WHWorkView : UIView {
         let logBoxWidthAndHeight:Double = floor(((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
         
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
+ 
+        //------------------------------------------------------------------------
+        //Start - Days Label
+        //Labels: Mon / Wed / Fri
         
+        //Update logBoxPointY for Days Label
+        logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
+        
+        for rowIndex in 1...3 {
+            let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
+            
+            if rowIndex == 1 {
+                daysLabel.text = "Mon"
+                
+            } else if rowIndex == 2 {
+                daysLabel.text = "Wed"
+                
+            } else if rowIndex == 3 {
+                daysLabel.text = "Fri"
+            }
+            
+            daysLabel.backgroundColor = UIColor.clear
+            daysLabel.textAlignment = .right
+            daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+            daysLabel.font = UIFont.systemFont(ofSize: 8.0)
+            self.addSubview(daysLabel)
+            logBoxPointY = logBoxPointY + Double(logBoxSize.height * 2.0) + (margin * 2.0)
+        }
+        
+        //Reset logBoxPointY
+        logBoxPointY = valueStandardHeightForTimeView + margin
+
+        //End - Days Label
+        //------------------------------------------------------------------------
+
         //------------------------------------------------------------------------
         //Start – Add Log Boxes
-
-        var rowIndex = (nowYear.numberOfDaysInYear() == 366) ? 0 : 1
+        
         var logsInColumnCounter = 1
         var previousMonth = 0
         
@@ -129,7 +162,6 @@ class WHWorkView : UIView {
                         logsInColumnCounter = 1
                     } else {
                         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
-                        rowIndex = rowIndex + 1
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
                     
@@ -188,44 +220,10 @@ class WHWorkView : UIView {
                     }
                     //End - Months Label
                     //------------------------------------------------------------------------
-                    
-                    
-                    
-                    
-                    
-                    
-                    //------------------------------------------------------------------------
-                    //Start - Days Label
-                    //Labels: Mon / Wed / Fri
-                    if rowIndex % 2 == 0 {
-                        let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
-                        
-                        if rowIndex == 2 {
-                            daysLabel.text = "Mon"
-                            
-                        } else if rowIndex == 4 {
-                            daysLabel.text = "Wed"
-                            
-                        } else if rowIndex == 6 {
-                            daysLabel.text = "Fri"
-                        }
-                        
-                        daysLabel.backgroundColor = UIColor.clear
-                        daysLabel.textAlignment = .right
-                        daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-                        daysLabel.font = UIFont.systemFont(ofSize: 8.0)
-                        self.addSubview(daysLabel)
-                    }
-                    //End - Days Label
-                    //------------------------------------------------------------------------
-                    
-                    
-                    
+
                 }
                 //End – Internal Loop
                 //------------------------------------------------------------------------
-                
-                
             }
         }
         
