@@ -26,7 +26,8 @@ class ViewController: UIViewController {
         workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
         workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
         self.view.addSubview(workView)
-        workView.setup(withYear: Int(yearsArray.first!)!)
+        //workView.setup(withYear: Int(yearsArray.first!)!)
+        workView.setup(withYear: Int(yearsArray[1])!)
 
         let yearsSegment = UISegmentedControl(items: yearsArray)
         yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0, width: width, height: 30.0)
@@ -34,12 +35,12 @@ class ViewController: UIViewController {
         yearsSegment.tintColor = UIColor.black
         yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
         self.view.addSubview(yearsSegment)
+        yearsSegment.selectedSegmentIndex = 1
     }
     
     //MARK: Segnement Target
     @objc fileprivate func yearsfilterApply(segment:UISegmentedControl) -> Void {
         let yearString = yearsArray[segment.selectedSegmentIndex]
-        print(yearString)
         workView.setup(withYear: Int(yearString)!)
     }
 }

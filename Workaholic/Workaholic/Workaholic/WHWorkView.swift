@@ -15,6 +15,19 @@ fileprivate extension Array {
     }
 }
 
+fileprivate extension Date {
+    func weekdayDiffence() -> Int {
+        return Calendar.current.dateComponents([.weekday], from: self).weekday ?? 0
+    }
+    
+    func dayOfWeek() -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: self).capitalized
+        // or use capitalized(with: locale) if you want
+    }
+}
+
 fileprivate let valueStandardWidthForHelperView:Double = 65.0
 
 fileprivate let valueStandardHeightForTimeView:Double = 25.0
@@ -45,7 +58,7 @@ class WHWorkView : UIView {
     //MARK: Add Workaholic View
     fileprivate func addWorkLogs(forYear logsForYear:Int) -> Void {
         
-        let nowYear = Date(year: logsForYear, month: 1, day: 1, hour: 12, minute: 0, second: 0)
+        let nowYear = Date(year: logsForYear, month: 1, day: 1)
         let nowYearString = nowYear.toString(format: .isoYear)
         
         let initialMargin:Double = 35.0
@@ -109,24 +122,21 @@ class WHWorkView : UIView {
             //monthIndex = 0 because we have to show the days from previous year.
             
             if monthIndex == 0 {
-                //Why remainingDays? (371 (53 columns * 7) - 366 days) = 5 days
-                //We may add 53 logs in a row.
-                let columns = (52 * Double(numberOfLogsInColumn)) + Double(arc4random_uniform(UInt32(7) - UInt32(1)) + UInt32(1))
-                var remainingDays = Int(columns - Double(nowYear.numberOfDaysInYear()))
+
+                var remainingDays = (nowYear.weekdayDiffence() - 1)
                 if remainingDays <= 0 {
-                    remainingDays = 2
+                    remainingDays = 7
                 }
-//                let remainingDays = 371 - nowYear.numberOfDaysInYear()
                 let previousYearDate = nowYear - remainingDays.days
-                
+
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
                     let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = zeroPercentageLoggedColor
-                    workLabel.text = "\(columnIndex)"
-                    workLabel.textAlignment = .center
-                    workLabel.font = UIFont.systemFont(ofSize: 3)
+//                    workLabel.text = "\(columnIndex)"
+//                    workLabel.textAlignment = .center
+//                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
@@ -150,10 +160,10 @@ class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
                     let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = zeroPercentageLoggedColor
-                    workLabel.text = "\(columnIndex)"
-                    workLabel.textAlignment = .center
-                    workLabel.font = UIFont.systemFont(ofSize: 3)
+                    workLabel.backgroundColor = logColorsArray.randomColor
+//                    workLabel.text = "\(columnIndex)"
+//                    workLabel.textAlignment = .center
+//                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
