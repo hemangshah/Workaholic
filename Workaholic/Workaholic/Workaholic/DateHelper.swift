@@ -464,8 +464,24 @@ public extension Date {
     }
     
     func numberOfDaysInYear() -> Int {
-        let range = Calendar.current.range(of: Calendar.Component.day, in: Calendar.Component.year, for: self)!
-        return range.upperBound - range.lowerBound
+        let calendar = Calendar.current
+        let interval = calendar.dateInterval(of: .year, for: self)!
+        let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+        return days
+    }
+    
+    func numberOfMonthsInYear() -> Int {
+        let calendar = Calendar.current
+        let interval = calendar.dateInterval(of: .year, for: self)!
+        let months = calendar.dateComponents([.month], from: interval.start, to: interval.end).month!
+        return months
+    }
+    
+    func numberOfDaysInWeek() -> Int {
+        let calendar = Calendar.current
+        let interval = calendar.dateInterval(of: .weekOfMonth, for: self)!
+        let days = calendar.dateComponents([.day], from: interval.start, to: interval.end).day!
+        return days
     }
     
     func firstDayOfWeek() -> Int {

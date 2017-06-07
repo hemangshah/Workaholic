@@ -15,10 +15,10 @@ fileprivate extension Array {
     }
 }
 
-fileprivate let valueStandardWidthForHelperView:CGFloat = 65.0
+fileprivate let valueStandardWidthForHelperView:Double = 65.0
 
-fileprivate let valueStandardHeightForTimeView:CGFloat = 25.0
-fileprivate let valueStandardHeightForHelperView:CGFloat = 25.0
+fileprivate let valueStandardHeightForTimeView:Double = 25.0
+fileprivate let valueStandardHeightForHelperView:Double = 25.0
 
 fileprivate let zeroPercentageLoggedColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
 fileprivate let twenty5percentageLoggedColor = UIColor.init(red: 197.0/255.0, green: 229.0/255.0, blue: 134.0/255.0, alpha: 1.0)
@@ -43,71 +43,48 @@ class WHWorkView : UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: Add Time View (Months)
-    fileprivate func addTimeView(withInitialMargin margin:CGFloat) -> Void {
-        let rect = CGRect.init(x: margin, y: 0.0, width: self.getMyWidth() - margin, height: valueStandardHeightForTimeView)
-        let timeView = WHTimeView.init(frame: rect)
-        self.addSubview(timeView)
-    }
-    
     //MARK: Add Workaholic View
-    fileprivate func addWorkLogs() -> Void {
+    fileprivate func addWorkLogs(forYear logsForYear:Int) -> Void {
         
-        let initialMargin:CGFloat = 35.0
-        let margin:CGFloat = 2.0
-        let numberOfLogsInColumn = 7
+        let nowYear = Date(year: logsForYear, month: 1, day: 1, hour: 12, minute: 0, second: 0)
+        let nowYearString = nowYear.toString(format: .isoYear)
         
-        var logBoxPointX = initialMargin + margin
-        var logBoxPointY = valueStandardHeightForTimeView + margin
+        let initialMargin:Double = 35.0
+        let margin:Double = 2.0
+        let numberOfLogsInColumn = nowYear.numberOfDaysInWeek()
         
-        //Add Month View
-        self.addTimeView(withInitialMargin: logBoxPointX)
+        var logBoxPointX:Double = Double(initialMargin + margin)
+        var logBoxPointY:Double = valueStandardHeightForTimeView + margin
         
         //Start - Calculating Box Sizes.
-        let startMonth:NSInteger = 1
-        let totalMonths:NSInteger = 12
-        
-        var totalColumns = Array<NSInteger>()
-        
-        //TODO: This should be dynamic.
-        let nowYear = Date.init()
-        let previousYear = nowYear - 1.year
-        let nowYearString = nowYear.toString(format: .isoYear)
-        let prevYearString = previousYear!.toString(format: .isoYear)
-        
-        for monthIndex in startMonth...totalMonths {
-            let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
-            let numberOfDaysInMonth = NSInteger(dateOfMonth!.numberOfDaysInMonth())
-            totalColumns.append(numberOfDaysInMonth)
-        }
-        //End - Calculating Box Sizes.
-        
-        let totalLogBoxes = totalColumns.reduce(0, +) + 5
-        let numberOfColumnsInEachRow:CGFloat = CGFloat(totalLogBoxes/numberOfLogsInColumn)
-        
-        let logBoxWidthAndHeight:CGFloat = ((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow)
-        let logBoxSize = CGSize.init(width: logBoxWidthAndHeight, height: logBoxWidthAndHeight)
+        let totalMonths:NSInteger = nowYear.numberOfMonthsInYear()
+
+        let numberOfColumnsInEachRow:Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
+
+        let logBoxWidthAndHeight:Double = floor(((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
+        print(logBoxWidthAndHeight)
+        let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
         
         //------------------------------------------------------------------------
-        //Start – Add Log Box
+        //Start – Add Log Boxes
         
         var rowIndex = 0
         var logsInColumnCounter = 1
         
+        var previousMonth = 0
         for monthIndex in 0...totalMonths {
+            
+            //monthIndex = 0 because we have to show the days from previous year.
+            
             if monthIndex == 0 {
-                let dateOfMonth = Date.init(fromString: "01-1-\(prevYearString)", format: .custom("dd-M-yyyy"))
-                let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
-                print("\((dateOfMonth!.toString(style: .shortMonth))) has \(numberOfDaysInMonth) days.")
-                
                 //Why remainingDays? (371 (53 columns * 7) - 366 days) = 5 days
-                let remainingDays = 371 - dateOfMonth!.numberOfDaysInYear()
-                let previousYearDate = dateOfMonth! - remainingDays.days
+                let remainingDays = 371 - nowYear.numberOfDaysInYear()
+                let previousYearDate = nowYear - remainingDays.days
                 
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
-                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
+                    let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
                     workLabel.text = "\(columnIndex)"
                     workLabel.textAlignment = .center
@@ -115,11 +92,11 @@ class WHWorkView : UIView {
                     self.addSubview(workLabel)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
-                        logBoxPointX = logBoxPointX + logBoxSize.width + margin
+                        logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
                         logBoxPointY = valueStandardHeightForTimeView + margin
                         logsInColumnCounter = 1
                     } else {
-                        logBoxPointY = logBoxPointY + logBoxSize.height + margin
+                        logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
                 }
@@ -130,12 +107,11 @@ class WHWorkView : UIView {
                 
                 let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
                 let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
-                print("\((dateOfMonth!.toString(style: .shortMonth))) has \(numberOfDaysInMonth) days.")
                 
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
-                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: logBoxSize.width, height: logBoxSize.height))
+                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = ((rowIndex % 3 == 0 && columnIndex % 5 == 0) ? logColorsArray.randomColor : zeroPercentageLoggedColor)
                     workLabel.text = "\(columnIndex)"
                     workLabel.textAlignment = .center
@@ -143,20 +119,81 @@ class WHWorkView : UIView {
                     self.addSubview(workLabel)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
-                        logBoxPointX = logBoxPointX + logBoxSize.width + margin
+                        logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
                         logBoxPointY = valueStandardHeightForTimeView + margin
                         logsInColumnCounter = 1
                     } else {
-                        logBoxPointY = logBoxPointY + logBoxSize.height + margin
+                        logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
                         rowIndex = rowIndex + 1
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
                     
                     //------------------------------------------------------------------------
+                    //Start - Months Label
+                    //Labels: Jan, Feb, Mar
+                    
+                    if previousMonth != monthIndex {
+                        previousMonth = monthIndex
+                        
+                        let monthLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView))
+                        
+                        if monthIndex == 1 {
+                            monthLabel.text = "Jan"
+                            
+                        } else if monthIndex == 2 {
+                            monthLabel.text = "Feb"
+                            
+                        } else if monthIndex == 3 {
+                            monthLabel.text = "Mar"
+                            
+                        } else if monthIndex == 4 {
+                            monthLabel.text = "Apr"
+                            
+                        } else if monthIndex == 5 {
+                            monthLabel.text = "May"
+                            
+                        } else if monthIndex == 6 {
+                            monthLabel.text = "Jun"
+                            
+                        } else if monthIndex == 7 {
+                            monthLabel.text = "Jul"
+                            
+                        } else if monthIndex == 8 {
+                            monthLabel.text = "Aug"
+                            
+                        } else if monthIndex == 9 {
+                            monthLabel.text = "Sep"
+                            
+                        } else if monthIndex == 10 {
+                            monthLabel.text = "Oct"
+                            
+                        } else if monthIndex == 11 {
+                            monthLabel.text = "Nov"
+                            
+                        } else if monthIndex == 12 {
+                            monthLabel.text = "Dec"
+                            
+                        }
+
+                        monthLabel.font = UIFont.systemFont(ofSize: 10.0)
+                        monthLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+                        monthLabel.backgroundColor = UIColor.clear
+                        monthLabel.textAlignment = .center
+                        self.addSubview(monthLabel)
+                    }
+                    //End - Months Label
+                    //------------------------------------------------------------------------
+                    
+                    
+                    
+                    
+                    
+                    
+                    //------------------------------------------------------------------------
                     //Start - Days Label
                     //Labels: Mon / Wed / Fri
                     if rowIndex % 2 == 0 {
-                        let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: logBoxSize.height))
+                        let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
                         
                         if rowIndex == 2 {
                             daysLabel.text = "Mon"
@@ -177,16 +214,20 @@ class WHWorkView : UIView {
                     //End - Days Label
                     //------------------------------------------------------------------------
                     
+                    
+                    
                 }
                 //End – Internal Loop
                 //------------------------------------------------------------------------
+                
+                
             }
         }
         
-        //End – Add Log Box
+        //End – Add Log Boxes
         //------------------------------------------------------------------------
         
-        self.addHelper(withLogBoxPointY: logBoxPointY + (CGFloat(numberOfLogsInColumn) * logBoxSize.height) + margin, withLogBoxSize: logBoxSize)
+        self.addHelper(withLogBoxPoints: CGPoint.init(x: logBoxPointX, y: Double(Double(numberOfLogsInColumn) * Double(logBoxSize.height)) + valueStandardHeightForTimeView + (margin * Double(numberOfLogsInColumn)) + margin), withLogBoxSize: logBoxSize)
     }
     
     //MARK: Add Logging Colors
@@ -199,16 +240,16 @@ class WHWorkView : UIView {
     }
     
     //MARK: Add Helper UI
-    fileprivate func addHelper(withLogBoxPointY storedLogBoxPointY:CGFloat, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
-        let margin:CGFloat = 2.0
+    fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint:CGPoint, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
+        let margin:Double = 2.0
         let numberOfColors = logColorsArray.count
         
-        let remainingDifference = (self.getMyHeight() - storedLogBoxPointY)
+        let remainingDifference = (self.getMyHeight() - Double(storedLogBoxPoint.y))
         let helperViewHeight = (remainingDifference > valueStandardHeightForHelperView) ? valueStandardHeightForHelperView : remainingDifference
         
         //Helper View
-        let helperViewSize = CGSize.init(width: valueStandardWidthForHelperView + (CGFloat(numberOfColors) * storedLogBoxSize.width), height: helperViewHeight)
-        let helperView = UIView.init(frame: CGRect.init(origin: CGPoint.init(x: self.getMyWidth() - helperViewSize.width, y: storedLogBoxPointY), size: helperViewSize))
+        let helperViewSize = CGSize.init(width: valueStandardWidthForHelperView + (Double(numberOfColors) * Double(storedLogBoxSize.width)), height: helperViewHeight)
+        let helperView = UIView.init(frame: CGRect.init(origin: CGPoint.init(x: Double(storedLogBoxPoint.x) - Double(helperViewSize.width), y: Double(storedLogBoxPoint.y)), size: helperViewSize))
         helperView.backgroundColor = UIColor.clear
         self.addSubview(helperView)
 
@@ -222,13 +263,13 @@ class WHWorkView : UIView {
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
         //Log Boxes Progress
-        var helperBoxPointX:CGFloat = helpLabelLess.frame.size.width + margin
+        var helperBoxPointX:Double = Double(helpLabelLess.frame.size.width) + margin
         
         for index in 0..<numberOfColors {
-            let helpLogLabel = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: 0.0, width: storedLogBoxSize.width, height: storedLogBoxSize.height))
+            let helpLogLabel = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: 0.0, width: Double(storedLogBoxSize.width), height: Double(storedLogBoxSize.height)))
             helpLogLabel.backgroundColor = logColorsArray[index]
             helperView.addSubview(helpLogLabel)
-            helperBoxPointX = helperBoxPointX + helpLogLabel.frame.size.width + margin
+            helperBoxPointX = helperBoxPointX + Double(helpLogLabel.frame.size.width) + margin
             helpLogLabel.center = CGPoint.init(x: helpLogLabel.center.x, y: helperView.frame.size.height/2.0)
         }
         
@@ -246,6 +287,6 @@ class WHWorkView : UIView {
     //MARK: Setup Everything!
     public func setup() -> Void {
         self.addLogColors()
-        self.addWorkLogs()
+        self.addWorkLogs(forYear: 2016)
     }
 }

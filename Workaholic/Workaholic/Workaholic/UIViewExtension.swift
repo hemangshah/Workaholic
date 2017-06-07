@@ -9,12 +9,12 @@
 import UIKit
 
 extension UIView {
-    func getMyWidth() -> CGFloat {
-        return self.frame.size.width
+    func getMyWidth() -> Double {
+        return Double(self.frame.size.width)
     }
     
-    func getMyHeight() -> CGFloat {
-        return self.frame.size.height
+    func getMyHeight() -> Double {
+        return Double(self.frame.size.height)
     }
     
     func getMySize() -> CGSize {

@@ -17,7 +17,6 @@
 		F1BBB2D61EE536B900DF8157 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D51EE536B900DF8157 /* Assets.xcassets */; };
 		F1BBB2D91EE536B900DF8157 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D71EE536B900DF8157 /* LaunchScreen.storyboard */; };
 		F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */; };
-		F1BBB2E41EE5374E00DF8157 /* WHTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */; };
 		F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */; };
 		F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */; };
 /* End PBXBuildFile section */
@@ -35,7 +34,6 @@
 		F1BBB2D81EE536B900DF8157 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F1BBB2DA1EE536B900DF8157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHWorkView.swift; sourceTree = "<group>"; };
-		F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHTimeView.swift; sourceTree = "<group>"; };
 		F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -98,7 +96,6 @@
 				F1A0C3461EE6D14E003AB400 /* Timepiece */,
 				F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */,
 				F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */,
-				F1BBB2E31EE5374E00DF8157 /* WHTimeView.swift */,
 				F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */,
 			);
 			path = Workaholic;
@@ -179,7 +176,6 @@
 				F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */,
 				F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */,
 				F1A0C34D1EE6D14E003AB400 /* Int+Timepiece.swift in Sources */,
-				F1BBB2E41EE5374E00DF8157 /* WHTimeView.swift in Sources */,
 				F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */,
 				F1A0C34C1EE6D14E003AB400 /* DateComponents+Timepiece.swift in Sources */,
 				F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */,
