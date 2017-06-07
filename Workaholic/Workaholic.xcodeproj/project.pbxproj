@@ -11,6 +11,7 @@
 		F1A0C34C1EE6D14E003AB400 /* DateComponents+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3481EE6D14E003AB400 /* DateComponents+Timepiece.swift */; };
 		F1A0C34D1EE6D14E003AB400 /* Int+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3491EE6D14E003AB400 /* Int+Timepiece.swift */; };
 		F1A0C34E1EE6D14E003AB400 /* String+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C34A1EE6D14E003AB400 /* String+Timepiece.swift */; };
+		F1A0C3811EE8166D003AB400 /* WHContributions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3801EE8166D003AB400 /* WHContributions.swift */; };
 		F1BBB2CF1EE536B900DF8157 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2CE1EE536B900DF8157 /* AppDelegate.swift */; };
 		F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2D01EE536B900DF8157 /* ViewController.swift */; };
 		F1BBB2D41EE536B900DF8157 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D21EE536B900DF8157 /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 		F1A0C3481EE6D14E003AB400 /* DateComponents+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateComponents+Timepiece.swift"; sourceTree = "<group>"; };
 		F1A0C3491EE6D14E003AB400 /* Int+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Timepiece.swift"; sourceTree = "<group>"; };
 		F1A0C34A1EE6D14E003AB400 /* String+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Timepiece.swift"; sourceTree = "<group>"; };
+		F1A0C3801EE8166D003AB400 /* WHContributions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHContributions.swift; sourceTree = "<group>"; };
 		F1BBB2CB1EE536B900DF8157 /* Workaholic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Workaholic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1BBB2CE1EE536B900DF8157 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F1BBB2D01EE536B900DF8157 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 				F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */,
 				F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */,
 				F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */,
+				F1A0C3801EE8166D003AB400 /* WHContributions.swift */,
 			);
 			path = Workaholic;
 			sourceTree = "<group>";
@@ -181,6 +184,7 @@
 				F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */,
 				F1A0C34E1EE6D14E003AB400 /* String+Timepiece.swift in Sources */,
 				F1BBB2CF1EE536B900DF8157 /* AppDelegate.swift in Sources */,
+				F1A0C3811EE8166D003AB400 /* WHContributions.swift in Sources */,
 				F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

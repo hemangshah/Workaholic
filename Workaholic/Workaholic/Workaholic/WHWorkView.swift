@@ -39,19 +39,20 @@ fileprivate let fiftyPercentageLoggedColor = UIColor.init(red: 120.0/255.0, gree
 fileprivate let seventy5percentageLoggedColor = UIColor.init(red: 25.0/255.0, green: 155.0/255.0, blue: 53.0/255.0, alpha: 1.0)
 fileprivate let hundreadPercentageLoggedColor = UIColor.init(red: 20.0/255.0, green: 98.0/255.0, blue: 36.0/255.0, alpha: 1.0)
 
-class WHWorkView : UIView {
+public class WHWorkView : UIView {
     
     fileprivate var logColorsArray = Array<UIColor>()
+    fileprivate var contributionsArray = Array<WHContributions>()
     
     //MARK: Init with Frame
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
         self.layer.borderColor = UIColor.lightGray.cgColor
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -69,14 +70,61 @@ class WHWorkView : UIView {
         var logBoxPointY:Double = valueStandardHeightForTimeView + margin
         
         //Start - Calculating Box Sizes.
+        //We know that there will always 12 months but for a change we are using a method to calculate total months.
         let totalMonths:NSInteger = nowYear.numberOfMonthsInYear()
 
+        //Total numbers of Columns [Log Boxes] in each Row.
         let numberOfColumnsInEachRow:Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
 
+        //Calculate Width & Height of Log Boxes. We are taking the floor value to fixed the space.
         let logBoxWidthAndHeight:Double = floor(((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
         
+        //Create Log Box Size.
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
  
+        
+        /*
+         
+         There should be weekdays at left to the work timeline. As in Github, weekday starts from Sunday. 
+         So we're also doing the same here. If someone want to implement all the days we can do it by tweaking the for loop a bit.
+         
+         TODO: Option to add all the days. Sun to Sat.
+         
+         for rowIndex in 1...7 {
+         let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
+         
+         if rowIndex == 1 {
+         daysLabel.text = "Sun"
+         
+         } else if rowIndex == 2 {
+         daysLabel.text = "Mon"
+         
+         } else if rowIndex == 3 {
+         daysLabel.text = "Tue"
+         
+         } else if rowIndex == 4 {
+         daysLabel.text = "Wed"
+         
+         } else if rowIndex == 5 {
+         daysLabel.text = "Thu"
+         
+         } else if rowIndex == 6 {
+         daysLabel.text = "Fri"
+         
+         } else if rowIndex == 7 {
+         daysLabel.text = "Sat"
+         
+         }
+         
+         daysLabel.backgroundColor = UIColor.clear
+         daysLabel.textAlignment = .right
+         daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+         daysLabel.font = UIFont.systemFont(ofSize: 8.0)
+         self.addSubview(daysLabel)
+         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + (margin)
+         }
+         
+        */
         //------------------------------------------------------------------------
         //Start - Days Label
         //Labels: Mon / Wed / Fri
@@ -111,6 +159,9 @@ class WHWorkView : UIView {
         //End - Days Label
         //------------------------------------------------------------------------
 
+        
+        
+        
         //------------------------------------------------------------------------
         //Start – Add Log Boxes
         
@@ -139,6 +190,15 @@ class WHWorkView : UIView {
 //                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
+                    let currentDateOfLoop = Date(year: (previousYearDate?.year)!, month: (previousYearDate?.month)!, day: columnIndex)
+                    
+                    if !isContributionsEmpty() {
+                        let contribution = isContributedOnThisDate(date: currentDateOfLoop)
+                        if (contribution != nil) {
+                            workLabel.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                        }
+                    }
+                    
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
                         logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
                         logBoxPointY = valueStandardHeightForTimeView + margin
@@ -160,11 +220,20 @@ class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
                     let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = logColorsArray.randomColor
+                    workLabel.backgroundColor = zeroPercentageLoggedColor
 //                    workLabel.text = "\(columnIndex)"
 //                    workLabel.textAlignment = .center
 //                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
+                    
+                    let currentDateOfLoop = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
+                    
+                    if !isContributionsEmpty() {
+                        let contribution = isContributedOnThisDate(date: currentDateOfLoop)
+                        if (contribution != nil) {
+                            workLabel.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                        }
+                    }
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
                         logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
@@ -243,7 +312,22 @@ class WHWorkView : UIView {
         self.addHelper(withLogBoxPoints: CGPoint.init(x: logBoxPointX, y: Double(Double(numberOfLogsInColumn) * Double(logBoxSize.height)) + valueStandardHeightForTimeView + (margin * Double(numberOfLogsInColumn)) + margin), withLogBoxSize: logBoxSize)
     }
     
-    //MARK: Add Logging Colors
+    fileprivate func colorForWorkPercentage(percentage:WHWorkPecentage) -> UIColor {
+        switch percentage {
+        case .hundread:
+            return hundreadPercentageLoggedColor
+        case .seventyFive:
+            return seventy5percentageLoggedColor
+        case .fifty:
+            return fiftyPercentageLoggedColor
+        case .twentyFive:
+            return twenty5percentageLoggedColor
+        default:
+            return zeroPercentageLoggedColor
+        }
+    }
+    
+    //MARK: Add Logging Colors[0% to 100%]
     fileprivate func addLogColors() -> Void {
         logColorsArray.removeAll()
         logColorsArray.append(zeroPercentageLoggedColor)
@@ -253,7 +337,7 @@ class WHWorkView : UIView {
         logColorsArray.append(hundreadPercentageLoggedColor)
     }
     
-    //MARK: Add Helper UI
+    //MARK: Add Helper UI [Less/More]
     fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint:CGPoint, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
         let margin:Double = 2.0
         let numberOfColors = logColorsArray.count
@@ -298,16 +382,29 @@ class WHWorkView : UIView {
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
     
-    //MARK: Setup Everything!
-    public func setup(withYear year:Int) -> Void {
-        clearExistingWHView()
-        self.addLogColors()
-        self.addWorkLogs(forYear: year)
-    }
-    
+    //MARK: Setup Helpers
     fileprivate func clearExistingWHView() -> Void {
+        contributionsArray.removeAll()
         for allTheSubviews in self.subviews {
             allTheSubviews.removeFromSuperview()
         }
+    }
+    
+    //MARK: Contribution Check
+    func isContributionsEmpty() -> Bool {
+        return contributionsArray.isEmpty
+    }
+    
+    func isContributedOnThisDate(date:Date) -> WHContributions? {
+        let results = contributionsArray.filter { $0.whcDate.compare(.isSameDay(as: date)) }
+        return results.isEmpty ? nil : results.first!
+    }
+    
+    //MARK: Setup Everything!
+    public func setup(withYear year:Int, withContributions contributions:Array<WHContributions>) -> Void {
+        clearExistingWHView()
+        contributionsArray.append(contentsOf: contributions)
+        self.addLogColors()
+        self.addWorkLogs(forYear: year)
     }
 }
