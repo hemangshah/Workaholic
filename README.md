@@ -8,11 +8,12 @@ A Github's like work contribution timeline.
 
 <b>Attention:</b> This repo is currently in development state, possibly it will be having a lot changes to make it a perfect look a like and to have similar operations of Github's owned timeline component.
 
-<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHPortrait.png">
+<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-1.png">
+<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-2.png">
 
 ToDos:
-- [ ] Dynamic Log Box for No. of days in a month.
-- [ ] Dynamic Months label width for No. of days in a month.
+- [x] Dynamic Log Box for No. of days in a month.
+- [x] Dynamic Months label width for No. of days in a month.
 - [x] Show Days to Left.
 - [ ] Orientation Support.
 - [ ] A selectable timeline.
