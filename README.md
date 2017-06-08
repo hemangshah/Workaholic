@@ -5,6 +5,7 @@ A Github's like work contribution timeline.
 ![Build Status](https://travis-ci.org/hemangshah/Workaholic.svg?branch=master)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
+![Swift 3.x](https://img.shields.io/badge/Swift-3.x-blue.svg)
 ![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
 
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-1.png">
