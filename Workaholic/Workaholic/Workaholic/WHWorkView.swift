@@ -221,9 +221,9 @@ public class WHWorkView : UIView {
                 for columnIndex in 1...numberOfDaysInMonth {
                     let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = zeroPercentageLoggedColor
-//                    workLabel.text = "\(columnIndex)"
-//                    workLabel.textAlignment = .center
-//                    workLabel.font = UIFont.systemFont(ofSize: 3)
+                    workLabel.text = "\(columnIndex)"
+                    workLabel.textAlignment = .center
+                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     let currentDateOfLoop = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
@@ -250,53 +250,10 @@ public class WHWorkView : UIView {
                     
                     if previousMonth != monthIndex {
                         previousMonth = monthIndex
-                        
-                        let monthLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView))
-                        
-                        if monthIndex == 1 {
-                            monthLabel.text = "Jan"
-                            
-                        } else if monthIndex == 2 {
-                            monthLabel.text = "Feb"
-                            
-                        } else if monthIndex == 3 {
-                            monthLabel.text = "Mar"
-                            
-                        } else if monthIndex == 4 {
-                            monthLabel.text = "Apr"
-                            
-                        } else if monthIndex == 5 {
-                            monthLabel.text = "May"
-                            
-                        } else if monthIndex == 6 {
-                            monthLabel.text = "Jun"
-                            
-                        } else if monthIndex == 7 {
-                            monthLabel.text = "Jul"
-                            
-                        } else if monthIndex == 8 {
-                            monthLabel.text = "Aug"
-                            
-                        } else if monthIndex == 9 {
-                            monthLabel.text = "Sep"
-                            
-                        } else if monthIndex == 10 {
-                            monthLabel.text = "Oct"
-                            
-                        } else if monthIndex == 11 {
-                            monthLabel.text = "Nov"
-                            
-                        } else if monthIndex == 12 {
-                            monthLabel.text = "Dec"
-                            
-                        }
-
-                        monthLabel.font = UIFont.systemFont(ofSize: 10.0)
-                        monthLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-                        monthLabel.backgroundColor = UIColor.clear
-                        monthLabel.textAlignment = .center
+                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: monthNameForMonthIndex(monthIndex: monthIndex), font: UIFont.systemFont(ofSize: 10.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .center)
                         self.addSubview(monthLabel)
                     }
+                    
                     //End - Months Label
                     //------------------------------------------------------------------------
 
@@ -312,6 +269,50 @@ public class WHWorkView : UIView {
         self.addHelper(withLogBoxPoints: CGPoint.init(x: logBoxPointX, y: Double(Double(numberOfLogsInColumn) * Double(logBoxSize.height)) + valueStandardHeightForTimeView + (margin * Double(numberOfLogsInColumn)) + margin), withLogBoxSize: logBoxSize)
     }
     
+    //MARK: Month Name
+    fileprivate func monthNameForMonthIndex(monthIndex:NSInteger) -> String {
+        
+        if monthIndex == 1 {
+            return "Jan"
+            
+        } else if monthIndex == 2 {
+            return "Feb"
+            
+        } else if monthIndex == 3 {
+            return "Mar"
+            
+        } else if monthIndex == 4 {
+            return "Apr"
+            
+        } else if monthIndex == 5 {
+            return "May"
+            
+        } else if monthIndex == 6 {
+            return "Jun"
+            
+        } else if monthIndex == 7 {
+            return "Jul"
+            
+        } else if monthIndex == 8 {
+            return "Aug"
+            
+        } else if monthIndex == 9 {
+            return "Sep"
+            
+        } else if monthIndex == 10 {
+            return "Oct"
+            
+        } else if monthIndex == 11 {
+            return "Nov"
+            
+        } else if monthIndex == 12 {
+            return "Dec"
+            
+        }
+        return ""
+    }
+    
+    //MARK: Color for Work Percentage
     fileprivate func colorForWorkPercentage(percentage:WHWorkPecentage) -> UIColor {
         switch percentage {
         case .hundread:
@@ -337,6 +338,17 @@ public class WHWorkView : UIView {
         logColorsArray.append(hundreadPercentageLoggedColor)
     }
     
+    //MARK: Create Label
+    fileprivate func createLabel(withFrame frame:CGRect, text:String, font:UIFont, textColor:UIColor, textAlignment:NSTextAlignment) -> UILabel {
+        let label = UILabel.init(frame: frame)
+        label.backgroundColor = UIColor.clear
+        label.text = text
+        label.font = font
+        label.textColor = textColor
+        label.textAlignment = textAlignment
+        return label
+    }
+    
     //MARK: Add Helper UI [Less/More]
     fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint:CGPoint, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
         let margin:Double = 2.0
@@ -352,11 +364,7 @@ public class WHWorkView : UIView {
         self.addSubview(helperView)
 
         //Label: Less
-        let helpLabelLess = UILabel.init(frame: CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0))
-        helpLabelLess.backgroundColor = UIColor.clear
-        helpLabelLess.text = "Less"
-        helpLabelLess.font = UIFont.systemFont(ofSize: 8.0)
-        helpLabelLess.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .left)
         helperView.addSubview(helpLabelLess)
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
@@ -372,12 +380,7 @@ public class WHWorkView : UIView {
         }
         
         //Label: More
-        let helpLabelMore = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0))
-        helpLabelMore.backgroundColor = UIColor.clear
-        helpLabelMore.textAlignment = .right
-        helpLabelMore.text = "More"
-        helpLabelMore.font = UIFont.systemFont(ofSize: 8.0)
-        helpLabelMore.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
+        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
         helperView.addSubview(helpLabelMore)
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
@@ -390,7 +393,7 @@ public class WHWorkView : UIView {
         }
     }
     
-    //MARK: Contribution Check
+    //MARK: Contributions Check
     func isContributionsEmpty() -> Bool {
         return contributionsArray.isEmpty
     }
