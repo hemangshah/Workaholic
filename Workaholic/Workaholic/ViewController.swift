@@ -42,11 +42,15 @@ public extension Date {
 
 class ViewController: UIViewController {
 
-    var yearsArray = Array<String>()
     var workView = WHWorkView()
+    var yearsSegment = UISegmentedControl()
     
+    var yearsArray = Array<String>()
     var sampleContributionsData = Array<WHContributions>()
     
+    let topMargin:Double = 80.0
+    
+    //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -54,27 +58,35 @@ class ViewController: UIViewController {
         createSampleContributionsData()
         
         yearsArray = ["2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008"]
-        
-        let marging:Double = 20.0
-        let topMargin:Double = 80.0
-        let width:Double = Double(UIScreen.main.bounds.size.width) - (marging * 2.0)
-        let height:Double = 140.0 //115.0
-        workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
-        workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
-        self.view.addSubview(workView)
-        workView.setup(withYear: Int(yearsArray.first!)!, withContributions: sampleContributionsData)
-        printSampleDataForYear(year: Int(yearsArray.first!)!)
-
-        let yearsSegment = UISegmentedControl(items: yearsArray)
-        yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0, width: width, height: 30.0)
-        yearsSegment.selectedSegmentIndex = 0
-        yearsSegment.tintColor = UIColor.black
-        yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
-        self.view.addSubview(yearsSegment)
     }
     
-    //MARK: Sample WHContributions Object
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        
+        //To set the correct height of WHWorkView, right now we have to add it in viewDidAppear to get the correct orientation of the view.
+        if UIDevice.current.orientation.isValidInterfaceOrientation {
+            let height = getHeightBasedOnOrientation()
+            let marging:Double = 20.0
+            let width:Double = Double(UIScreen.main.bounds.size.width) - (marging * 2.0)
+            
+            workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
+            workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
+            self.view.addSubview(workView)
+            workView.setup(withYear: Int(yearsArray.first!)!, withContributions: sampleContributionsData)
+            printSampleDataForYear(year: Int(yearsArray.first!)!)
+            
+            yearsSegment = UISegmentedControl(items: yearsArray)
+            yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0, width: width, height: 30.0)
+            yearsSegment.selectedSegmentIndex = 0
+            yearsSegment.tintColor = UIColor.black
+            yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
+            yearsSegment.autoresizingMask = [.flexibleWidth, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
+            self.view.addSubview(yearsSegment)
+        }
+    }
     
+    //MARK: Sample WHContributions Objects
     func createSampleContributionsData() -> Void {
         sampleContributionsData.removeAll()
         sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
@@ -108,5 +120,48 @@ class ViewController: UIViewController {
         let yearString = yearsArray[segment.selectedSegmentIndex]
         workView.setup(withYear: Int(yearString)!, withContributions: sampleContributionsData)
         printSampleDataForYear(year: Int(yearString)!)
+    }
+    
+    //MARK: Rotation Handler
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animate(alongsideTransition: { (_) in
+            let orient = newCollection.verticalSizeClass
+            switch orient {
+            case .compact:
+                //Lanscape
+                self.correctHeightForWorkView(withHeight: 140.0)
+            default:
+                //Portrait
+                self.correctHeightForWorkView(withHeight: 85.0)
+            }
+        }, completion: { _ in
+            //Rotation completed
+            self.correctYForYearsSegment()
+            self.workView.setup(withYear: Int(self.yearsArray.first!)!, withContributions: self.sampleContributionsData)
+        })
+        super.willTransition(to: newCollection, with: coordinator)
+    }
+    
+    func correctYForYearsSegment() -> Void {
+        var currentFrame = yearsSegment.frame
+        currentFrame.origin.y = CGFloat(Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0)
+        yearsSegment.frame = currentFrame
+    }
+    
+    func correctHeightForWorkView(withHeight height:Double) -> Void {
+        var currentFrame = workView.frame
+        currentFrame.size.height = CGFloat(height)
+        workView.frame = currentFrame
+    }
+    
+    func getHeightBasedOnOrientation() -> Double {
+        if UIDevice.current.orientation.isValidInterfaceOrientation {
+            if UIDevice.current.orientation.isLandscape {
+                return 140.0
+            } else {
+                return 85.0
+            }
+        }
+        return 0.0
     }
 }

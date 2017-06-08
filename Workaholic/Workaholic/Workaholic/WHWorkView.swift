@@ -81,7 +81,7 @@ public class WHWorkView : UIView {
         
         //Create Log Box Size.
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
- 
+
         //------------------------------------------------------------------------
         //Start - Days Label
         //Labels: Mon / Wed / Fri
@@ -134,6 +134,9 @@ public class WHWorkView : UIView {
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
                     let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = zeroPercentageLoggedColor
+//                    workLabel.text = "\(columnIndex)"
+//                    workLabel.textAlignment = .center
+//                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     let currentDateOfLoop = Date(year: (previousYearDate?.year)!, month: (previousYearDate?.month)!, day: columnIndex)
