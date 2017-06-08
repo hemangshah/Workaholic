@@ -82,49 +82,6 @@ public class WHWorkView : UIView {
         //Create Log Box Size.
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
  
-        
-        /*
-         
-         There should be weekdays at left to the work timeline. As in Github, weekday starts from Sunday. 
-         So we're also doing the same here. If someone want to implement all the days we can do it by tweaking the for loop a bit.
-         
-         TODO: Option to add all the days. Sun to Sat.
-         
-         for rowIndex in 1...7 {
-         let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
-         
-         if rowIndex == 1 {
-         daysLabel.text = "Sun"
-         
-         } else if rowIndex == 2 {
-         daysLabel.text = "Mon"
-         
-         } else if rowIndex == 3 {
-         daysLabel.text = "Tue"
-         
-         } else if rowIndex == 4 {
-         daysLabel.text = "Wed"
-         
-         } else if rowIndex == 5 {
-         daysLabel.text = "Thu"
-         
-         } else if rowIndex == 6 {
-         daysLabel.text = "Fri"
-         
-         } else if rowIndex == 7 {
-         daysLabel.text = "Sat"
-         
-         }
-         
-         daysLabel.backgroundColor = UIColor.clear
-         daysLabel.textAlignment = .right
-         daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-         daysLabel.font = UIFont.systemFont(ofSize: 8.0)
-         self.addSubview(daysLabel)
-         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + (margin)
-         }
-         
-        */
         //------------------------------------------------------------------------
         //Start - Days Label
         //Labels: Mon / Wed / Fri
@@ -133,7 +90,7 @@ public class WHWorkView : UIView {
         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
         
         for rowIndex in 1...3 {
-            let daysLabel = UILabel.init(frame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)))
+            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
             
             if rowIndex == 1 {
                 daysLabel.text = "Mon"
@@ -144,11 +101,6 @@ public class WHWorkView : UIView {
             } else if rowIndex == 3 {
                 daysLabel.text = "Fri"
             }
-            
-            daysLabel.backgroundColor = UIColor.clear
-            daysLabel.textAlignment = .right
-            daysLabel.textColor = UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0)
-            daysLabel.font = UIFont.systemFont(ofSize: 8.0)
             self.addSubview(daysLabel)
             logBoxPointY = logBoxPointY + Double(logBoxSize.height * 2.0) + (margin * 2.0)
         }
@@ -159,9 +111,6 @@ public class WHWorkView : UIView {
         //End - Days Label
         //------------------------------------------------------------------------
 
-        
-        
-        
         //------------------------------------------------------------------------
         //Start – Add Log Boxes
         
@@ -185,9 +134,6 @@ public class WHWorkView : UIView {
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
                     let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = zeroPercentageLoggedColor
-//                    workLabel.text = "\(columnIndex)"
-//                    workLabel.textAlignment = .center
-//                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     let currentDateOfLoop = Date(year: (previousYearDate?.year)!, month: (previousYearDate?.month)!, day: columnIndex)
@@ -262,10 +208,10 @@ public class WHWorkView : UIView {
                 //------------------------------------------------------------------------
             }
         }
-        
         //End – Add Log Boxes
         //------------------------------------------------------------------------
         
+        //Add Helper View : Less ººººº More
         self.addHelper(withLogBoxPoints: CGPoint.init(x: logBoxPointX, y: Double(Double(numberOfLogsInColumn) * Double(logBoxSize.height)) + valueStandardHeightForTimeView + (margin * Double(numberOfLogsInColumn)) + margin), withLogBoxSize: logBoxSize)
     }
     
