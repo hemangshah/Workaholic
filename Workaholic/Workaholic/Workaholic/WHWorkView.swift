@@ -90,7 +90,7 @@ public class WHWorkView : UIView {
         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
         
         for rowIndex in 1...3 {
-            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
+            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: ((logBoxSize.width >= 10) ? 8.0 : 5.0)), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
             
             if rowIndex == 1 {
                 daysLabel.text = "Mon"
@@ -167,9 +167,9 @@ public class WHWorkView : UIView {
                 for columnIndex in 1...numberOfDaysInMonth {
                     let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
                     workLabel.backgroundColor = zeroPercentageLoggedColor
-                    workLabel.text = "\(columnIndex)"
-                    workLabel.textAlignment = .center
-                    workLabel.font = UIFont.systemFont(ofSize: 3)
+//                    workLabel.text = "\(columnIndex)"
+//                    workLabel.textAlignment = .center
+//                    workLabel.font = UIFont.systemFont(ofSize: 3)
                     self.addSubview(workLabel)
                     
                     let currentDateOfLoop = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
@@ -292,6 +292,8 @@ public class WHWorkView : UIView {
         label.font = font
         label.textColor = textColor
         label.textAlignment = textAlignment
+        label.minimumScaleFactor = (UIFont.labelFontSize/2)/UIFont.labelFontSize
+        label.adjustsFontSizeToFitWidth = true
         return label
     }
     
