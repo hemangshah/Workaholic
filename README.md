@@ -2,24 +2,43 @@
 
 A Github's like work contribution timeline.
 
+![Build Status](https://travis-ci.org/hemangshah/Workaholic.svg?branch=master)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
 ![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
 
-<b>Attention:</b> This repo is currently in development state, possibly it will be having a lot changes to make it a perfect look a like and to have similar operations of Github's owned timeline component.
-
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-1.png">
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-2.png">
 
-ToDos:
+# ToDos:
+
 - [x] Dynamic Log Box for No. of days in a month.
 - [x] Dynamic Months label width for No. of days in a month.
 - [x] Show Days to Left.
-- [ ] Orientation Support.
-- [ ] A selectable timeline.
+- [x] Orientation Support. Supports UI for Portrait / Landscape.
 - [x] Correct UI.
+- [ ] Orientation Change Support.
+- [ ] Selectable Timeline.
 - [ ] Code Refactoring.
 - [ ] Customization Options.
-- [ ] Many many things!
+- [ ] Customize Fonts, Text/ Background/ Log Colors.
+- [ ] Show/Hide Day Numbers in Log Boxes.
+- [ ] Localize Months and Days.
+- [ ] Remove Dependancies.
 
 You can [watch](https://github.com/hemangshah/Workaholic/subscription) to **Workaholic** to see continuous updates. Stay tuned.
+
+<b>Have an idea for improvements of this class?
+Please open an [issue](https://github.com/hemangshah/Workaholic/issues/new).</b>
+    
+## Credits
+
+<b>[Hemang Shah](https://about.me/hemang.shah)</b>
+
+**You can shoot me an [email](http://www.google.com/recaptcha/mailhide/d?k=01IzGihUsyfigse2G9z80rBw==&c=vU7vyAaau8BctOAIJFwHVbKfgtIqQ4QLJaL73yhnB3k=) to contact.**
+
+## License
+
+The MIT License (MIT)
+
+> Read the [LICENSE](https://github.com/hemangshah/Workaholic/blob/master/LICENSE) file for details.
