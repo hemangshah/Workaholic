@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11226421EED5BB8004EBE81 /* WHButton.swift */; };
+		F1429FBE1EED685E006BBCF4 /* WHDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1429FBD1EED685E006BBCF4 /* WHDate.swift */; };
 		F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3471EE6D14E003AB400 /* Date+Timepiece.swift */; };
 		F1A0C34C1EE6D14E003AB400 /* DateComponents+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3481EE6D14E003AB400 /* DateComponents+Timepiece.swift */; };
 		F1A0C34D1EE6D14E003AB400 /* Int+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3491EE6D14E003AB400 /* Int+Timepiece.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F11226421EED5BB8004EBE81 /* WHButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHButton.swift; sourceTree = "<group>"; };
+		F1429FBD1EED685E006BBCF4 /* WHDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHDate.swift; sourceTree = "<group>"; };
 		F1A0C3471EE6D14E003AB400 /* Date+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Timepiece.swift"; sourceTree = "<group>"; };
 		F1A0C3481EE6D14E003AB400 /* DateComponents+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DateComponents+Timepiece.swift"; sourceTree = "<group>"; };
 		F1A0C3491EE6D14E003AB400 /* Int+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Timepiece.swift"; sourceTree = "<group>"; };
@@ -100,6 +104,8 @@
 				F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */,
 				F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */,
 				F1A0C3801EE8166D003AB400 /* WHContributions.swift */,
+				F11226421EED5BB8004EBE81 /* WHButton.swift */,
+				F1429FBD1EED685E006BBCF4 /* WHDate.swift */,
 			);
 			path = Workaholic;
 			sourceTree = "<group>";
@@ -181,8 +187,10 @@
 				F1A0C34D1EE6D14E003AB400 /* Int+Timepiece.swift in Sources */,
 				F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */,
 				F1A0C34C1EE6D14E003AB400 /* DateComponents+Timepiece.swift in Sources */,
+				F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */,
 				F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */,
 				F1A0C34E1EE6D14E003AB400 /* String+Timepiece.swift in Sources */,
+				F1429FBE1EED685E006BBCF4 /* WHDate.swift in Sources */,
 				F1BBB2CF1EE536B900DF8157 /* AppDelegate.swift in Sources */,
 				F1A0C3811EE8166D003AB400 /* WHContributions.swift in Sources */,
 				F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */,

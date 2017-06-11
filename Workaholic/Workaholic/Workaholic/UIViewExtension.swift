@@ -8,7 +8,7 @@
 
 import UIKit
 
-extension UIView {
+public extension UIView {
     func getMyWidth() -> Double {
         return Double(self.frame.size.width)
     }

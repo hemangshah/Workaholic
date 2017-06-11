@@ -76,6 +76,12 @@ class ViewController: UIViewController {
             workView.setup(withYear: Int(yearsArray.first!)!, withContributions: sampleContributionsData)
             printSampleDataForYear(year: Int(yearsArray.first!)!)
             
+            //Detect Taps on Work Logs
+            workView.onWorkLogTappedCompletion = { (whDate) in
+                print("\(String(describing: whDate.day!)) \(String(describing: whDate.month!)) \(String(describing: whDate.year!)) [dd MM yyyy]")
+                print(whDate.date!)
+            }
+            
             yearsSegment = UISegmentedControl(items: yearsArray)
             yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0, width: width, height: 30.0)
             yearsSegment.selectedSegmentIndex = 0

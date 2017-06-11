@@ -44,6 +44,8 @@ public class WHWorkView : UIView {
     fileprivate var logColorsArray = Array<UIColor>()
     fileprivate var contributionsArray = Array<WHContributions>()
     
+    public var onWorkLogTappedCompletion:((_ date:WHDate) -> ())? = nil
+    
     //MARK: Init with Frame
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -115,7 +117,7 @@ public class WHWorkView : UIView {
         //Start – Add Log Boxes
         
         var logsInColumnCounter = 1
-        var previousMonth = 0
+        var previousMonthIndex = 0
         
         for monthIndex in 0...totalMonths {
             
@@ -128,23 +130,31 @@ public class WHWorkView : UIView {
                     remainingDays = 7
                 }
                 let previousYearDate = nowYear - remainingDays.days
-
+                let previousYear = previousYearDate?.year
+                let previousMonth = previousYearDate?.month
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
-                    let workLabel = UILabel.init(frame: CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = zeroPercentageLoggedColor
-//                    workLabel.text = "\(columnIndex)"
-//                    workLabel.textAlignment = .center
-//                    workLabel.font = UIFont.systemFont(ofSize: 3)
-                    self.addSubview(workLabel)
                     
-                    let currentDateOfLoop = Date(year: (previousYearDate?.year)!, month: (previousYearDate?.month)!, day: columnIndex)
+                    let workButton = WHButton()
+                    workButton.frame = CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height))
+                    workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
+                    workButton.backgroundColor = zeroPercentageLoggedColor
+                    self.addSubview(workButton)
+                    
+                    let whDate = WHDate.init()
+                    whDate.date = Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex)
+                    whDate.day = columnIndex
+                    whDate.month = previousMonth
+                    whDate.year = previousYear
+                    
+                    let currentDateOfLoop = whDate.date!
+                    workButton.workDate = whDate
                     
                     if !isContributionsEmpty() {
                         let contribution = isContributedOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workLabel.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
                         }
                     }
                     
@@ -164,23 +174,32 @@ public class WHWorkView : UIView {
                 
                 let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
                 let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
+                let currentYear = dateOfMonth?.year
+                let currentMonth = dateOfMonth?.month
                 
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
-                    let workLabel = UILabel.init(frame: CGRect.init(x: logBoxPointX, y: logBoxPointY, width: Double(logBoxSize.width), height: Double(logBoxSize.height)))
-                    workLabel.backgroundColor = zeroPercentageLoggedColor
-//                    workLabel.text = "\(columnIndex)"
-//                    workLabel.textAlignment = .center
-//                    workLabel.font = UIFont.systemFont(ofSize: 3)
-                    self.addSubview(workLabel)
                     
-                    let currentDateOfLoop = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
+                    let workButton = WHButton()
+                    workButton.frame = CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height))
+                    workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
+                    workButton.backgroundColor = zeroPercentageLoggedColor
+                    self.addSubview(workButton)
+                                        
+                    let whDate = WHDate.init()
+                    whDate.date = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
+                    whDate.day = columnIndex
+                    whDate.month = currentMonth
+                    whDate.year = currentYear
+                    
+                    let currentDateOfLoop = whDate.date!
+                    workButton.workDate = whDate
                     
                     if !isContributionsEmpty() {
                         let contribution = isContributedOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workLabel.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
                         }
                     }
                     
@@ -197,8 +216,8 @@ public class WHWorkView : UIView {
                     //Start - Months Label
                     //Labels: Jan, Feb, Mar
                     
-                    if previousMonth != monthIndex {
-                        previousMonth = monthIndex
+                    if previousMonthIndex != monthIndex {
+                        previousMonthIndex = monthIndex
                         let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: monthNameForMonthIndex(monthIndex: monthIndex), font: UIFont.systemFont(ofSize: 10.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .center)
                         self.addSubview(monthLabel)
                     }
@@ -216,6 +235,15 @@ public class WHWorkView : UIView {
         
         //Add Helper View : Less ººººº More
         self.addHelper(withLogBoxPoints: CGPoint.init(x: logBoxPointX, y: Double(Double(numberOfLogsInColumn) * Double(logBoxSize.height)) + valueStandardHeightForTimeView + (margin * Double(numberOfLogsInColumn)) + margin), withLogBoxSize: logBoxSize)
+    }
+    
+    //MARK: Actions
+    @objc fileprivate func actionDayTapped(sender:WHButton) -> Void {
+        print("Tapped Worked Log for Date: \(String(describing: sender.workDate?.date!))")
+        
+        if onWorkLogTappedCompletion != nil {
+            onWorkLogTappedCompletion!(sender.workDate!)
+        }
     }
     
     //MARK: Month Name
