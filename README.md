@@ -5,6 +5,7 @@ A Github's like work contribution timeline.
 ![Build Status](https://travis-ci.org/hemangshah/Workaholic.svg?branch=master)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 ![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
+![Swift 4.x](https://img.shields.io/badge/Swift-4.x-blue.svg)
 ![Swift 3.x](https://img.shields.io/badge/Swift-3.x-blue.svg)
 ![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
 [![Blog](https://img.shields.io/badge/Blog-iKiwiTech.com-blue.svg)](http://www.ikiwitech.com)
@@ -19,14 +20,14 @@ A Github's like work contribution timeline.
 - [x] Show Days to Left.
 - [x] Orientation Support. Supports UI for Portrait / Landscape.
 - [x] Correct UI.
-- [ ] Orientation Change Support.
-- [ ] Selectable Timeline.
-- [ ] Code Refactoring.
+- [x] Selectable Timeline.
+- [x] Orientation Change Support.
 - [ ] Customization Options.
 - [ ] Customize Fonts, Text/ Background/ Log Colors.
 - [ ] Show/Hide Day Numbers in Log Boxes.
 - [ ] Localize Months and Days.
-- [ ] Remove Dependancies.
+- [ ] Remove Dependancies of 3rd Party classes.
+- [ ] Code Refactoring.
 
 You can [watch](https://github.com/hemangshah/Workaholic/subscription) to **Workaholic** to see continuous updates. Stay tuned.
 
