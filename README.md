@@ -1,4 +1,4 @@
-# Workaholic 🌀
+# Workaholic 🤸🏻
 
 A Github's like work contribution timeline.
 
