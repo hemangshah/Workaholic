@@ -13,18 +13,18 @@ fileprivate let valueStandardWidthForHelperView: Double = 65.0
 fileprivate let valueStandardHeightForTimeView: Double = 25.0
 fileprivate let valueStandardHeightForHelperView: Double = 25.0
 
-fileprivate let zeroPercentageLoggedColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
-fileprivate let twenty5percentageLoggedColor = UIColor.colorFromRGB(r: 197.0, g: 229.0, b: 134.0, alpha: 1.0)
-fileprivate let fiftyPercentageLoggedColor = UIColor.colorFromRGB(r: 120.0, g: 202.0, b: 107.0, alpha: 1.0)
-fileprivate let seventy5percentageLoggedColor = UIColor.colorFromRGB(r: 25.0, g: 155.0, b: 53.0, alpha: 1.0)
-fileprivate let hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
-
 public class WHWorkView : UIView {
     
     fileprivate var logColorsArray = Array<UIColor>()
     fileprivate var contributionsArray = Array<WHContribution>()
     
-    public var onWorkLogTappedCompletion:((_ date:WHDate) -> ())? = nil
+    public var onWorkLogTappedCompletion:((_ date: WHDate) -> ())? = nil
+    
+    public var zeroPercentageLoggedColor: UIColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
+    public var twenty5percentageLoggedColor = UIColor.colorFromRGB(r: 197.0, g: 229.0, b: 134.0, alpha: 1.0)
+    public var fiftyPercentageLoggedColor = UIColor.colorFromRGB(r: 120.0, g: 202.0, b: 107.0, alpha: 1.0)
+    public var seventy5percentageLoggedColor = UIColor.colorFromRGB(r: 25.0, g: 155.0, b: 53.0, alpha: 1.0)
+    public var hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
     
     //MARK: Init with Frame
     override public init(frame: CGRect) {

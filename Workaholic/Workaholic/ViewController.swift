@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var yearsSegment = UISegmentedControl()
     
     var yearsArray = Array<String>()
-    var arrayContributions = Array<WHContribution>()
+    var contributions = Array<WHContribution>()
     
     let topMargin: Double = 80.0
     
@@ -36,17 +36,17 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        
         //To set the correct height of WHWorkView, right now we have to add it in viewDidAppear to get the correct orientation of the view.
         if UIDevice.current.orientation.isValidInterfaceOrientation {
             let height = getHeightBasedOnOrientation()
-            let marging:Double = 20.0
-            let width:Double = Double(UIScreen.main.bounds.size.width) - (marging * 2.0)
+            let margin: Double = 20.0
+            let width: Double = Double(UIScreen.main.bounds.size.width) - (margin * 2.0)
             
-            workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
+            workView = WHWorkView.init(frame: CGRect.init(x: margin, y: topMargin, width: width, height: height))
             workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
             self.view.addSubview(workView)
-            workView.setup(withYear: Int(yearsArray.first!)!, withContributions: arrayContributions)
+            //Please set any properties before calling workView.setup().
+            workView.setup(withYear: Int(yearsArray.first!)!, withContributions: contributions)
             printSampleDataForYear(year: Int(yearsArray.first!)!)
             
             //Detect Taps on Work Logs
@@ -55,35 +55,39 @@ class ViewController: UIViewController {
                 print(whDate.date!)
             }
             
-            yearsSegment = UISegmentedControl(items: yearsArray)
-            yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.height() + topMargin/2.0, width: width, height: 30.0)
-            yearsSegment.selectedSegmentIndex = 0
-            yearsSegment.tintColor = UIColor.black
-            yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
-            yearsSegment.autoresizingMask = [.flexibleWidth, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
-            self.view.addSubview(yearsSegment)
+            setupYearSegment(withMargin: margin, width: width)
         }
+    }
+    
+    internal func setupYearSegment(withMargin margin: Double, width: Double) {
+        yearsSegment = UISegmentedControl(items: yearsArray)
+        yearsSegment.frame = CGRect.init(x: margin, y: Double(workView.frame.origin.y) + workView.height() + topMargin/2.0, width: width, height: 30.0)
+        yearsSegment.selectedSegmentIndex = 0
+        yearsSegment.tintColor = UIColor.black
+        yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
+        yearsSegment.autoresizingMask = [.flexibleWidth, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
+        self.view.addSubview(yearsSegment)
     }
     
     //MARK: Sample WHContributions Objects
     func createContributions() -> Void {
-        arrayContributions.removeAll()
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 2, inYear: 2017), WorkPercentage: .fifty))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 3, inYear: 2017), WorkPercentage: .twentyFive))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 4, inYear: 2017), WorkPercentage: .fifty))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 5, inYear: 2017), WorkPercentage: .twentyFive))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 6, inYear: 2016), WorkPercentage: .seventyFive))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 7, inYear: 2015), WorkPercentage: .hundread))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 8, inYear: 2014), WorkPercentage: .seventyFive))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 9, inYear: 2013), WorkPercentage: .hundread))
-        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 10, inYear: 2012), WorkPercentage: .zero))
+        contributions.removeAll()
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 2, inYear: 2017), WorkPercentage: .fifty))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 3, inYear: 2017), WorkPercentage: .twentyFive))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 4, inYear: 2017), WorkPercentage: .fifty))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 5, inYear: 2017), WorkPercentage: .twentyFive))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 6, inYear: 2016), WorkPercentage: .seventyFive))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 7, inYear: 2015), WorkPercentage: .hundread))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 8, inYear: 2014), WorkPercentage: .seventyFive))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 9, inYear: 2013), WorkPercentage: .hundread))
+        contributions.append(WHContribution.init(Date: Date.randomDates(days: 10, inYear: 2012), WorkPercentage: .zero))
     }
     
     //MARK: Print Sample Data
     func printSampleDataForYear(year:Int) -> Void {
         print("--------------- Sample Data for Year: \(year) ---------------")
-        let results = arrayContributions.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
+        let results = contributions.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
         if !results.isEmpty {
             for contribution in results {
                 print("\n\(contribution.whcDate)")
@@ -97,7 +101,7 @@ class ViewController: UIViewController {
     //MARK: Segnement Target
     @objc fileprivate func yearsfilterApply(segment:UISegmentedControl) -> Void {
         let yearString = yearsArray[segment.selectedSegmentIndex]
-        workView.setup(withYear: Int(yearString)!, withContributions: arrayContributions)
+        workView.setup(withYear: Int(yearString)!, withContributions: contributions)
         printSampleDataForYear(year: Int(yearString)!)
     }
     
@@ -116,7 +120,7 @@ class ViewController: UIViewController {
         }, completion: { _ in
             //Rotation completed
             self.correctYForYearsSegment()
-            self.workView.setup(withYear: Int(self.yearsArray.first!)!, withContributions: self.arrayContributions)
+            self.workView.setup(withYear: Int(self.yearsArray.first!)!, withContributions: self.contributions)
         })
         super.willTransition(to: newCollection, with: coordinator)
     }
