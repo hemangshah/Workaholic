@@ -14,18 +14,23 @@ class ViewController: UIViewController {
     var yearsSegment = UISegmentedControl()
     
     var yearsArray = Array<String>()
-    var sampleContributionsData = Array<WHContributions>()
+    var arrayContributions = Array<WHContribution>()
     
-    let topMargin:Double = 80.0
+    let topMargin: Double = 80.0
     
     //MARK: View Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        createSampleContributionsData()
+        //Sample Contributions
+        createContributions()
         
-        yearsArray = ["2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010", "2009", "2008"]
+        //Create Years Array
+        for year in 2008...2017 {
+            yearsArray.append(String(year))
+        }
+        yearsArray.reverse()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -41,7 +46,7 @@ class ViewController: UIViewController {
             workView = WHWorkView.init(frame: CGRect.init(x: marging, y: topMargin, width: width, height: height))
             workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
             self.view.addSubview(workView)
-            workView.setup(withYear: Int(yearsArray.first!)!, withContributions: sampleContributionsData)
+            workView.setup(withYear: Int(yearsArray.first!)!, withContributions: arrayContributions)
             printSampleDataForYear(year: Int(yearsArray.first!)!)
             
             //Detect Taps on Work Logs
@@ -61,24 +66,24 @@ class ViewController: UIViewController {
     }
     
     //MARK: Sample WHContributions Objects
-    func createSampleContributionsData() -> Void {
-        sampleContributionsData.removeAll()
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 2, inYear: 2017), WorkPercentage: .fifty))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 3, inYear: 2017), WorkPercentage: .twentyFive))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 4, inYear: 2017), WorkPercentage: .fifty))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 5, inYear: 2017), WorkPercentage: .twentyFive))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 6, inYear: 2016), WorkPercentage: .seventyFive))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 7, inYear: 2015), WorkPercentage: .hundread))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 8, inYear: 2014), WorkPercentage: .seventyFive))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 9, inYear: 2013), WorkPercentage: .hundread))
-        sampleContributionsData.append(WHContributions.init(Date: Date.randomDates(days: 10, inYear: 2012), WorkPercentage: .zero))
+    func createContributions() -> Void {
+        arrayContributions.removeAll()
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 2, inYear: 2017), WorkPercentage: .fifty))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 3, inYear: 2017), WorkPercentage: .twentyFive))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 4, inYear: 2017), WorkPercentage: .fifty))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 5, inYear: 2017), WorkPercentage: .twentyFive))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 6, inYear: 2016), WorkPercentage: .seventyFive))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 7, inYear: 2015), WorkPercentage: .hundread))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 8, inYear: 2014), WorkPercentage: .seventyFive))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 9, inYear: 2013), WorkPercentage: .hundread))
+        arrayContributions.append(WHContribution.init(Date: Date.randomDates(days: 10, inYear: 2012), WorkPercentage: .zero))
     }
     
     //MARK: Print Sample Data
     func printSampleDataForYear(year:Int) -> Void {
         print("--------------- Sample Data for Year: \(year) ---------------")
-        let results = sampleContributionsData.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
+        let results = arrayContributions.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
         if !results.isEmpty {
             for contribution in results {
                 print("\n\(contribution.whcDate)")
@@ -92,7 +97,7 @@ class ViewController: UIViewController {
     //MARK: Segnement Target
     @objc fileprivate func yearsfilterApply(segment:UISegmentedControl) -> Void {
         let yearString = yearsArray[segment.selectedSegmentIndex]
-        workView.setup(withYear: Int(yearString)!, withContributions: sampleContributionsData)
+        workView.setup(withYear: Int(yearString)!, withContributions: arrayContributions)
         printSampleDataForYear(year: Int(yearString)!)
     }
     
@@ -111,7 +116,7 @@ class ViewController: UIViewController {
         }, completion: { _ in
             //Rotation completed
             self.correctYForYearsSegment()
-            self.workView.setup(withYear: Int(self.yearsArray.first!)!, withContributions: self.sampleContributionsData)
+            self.workView.setup(withYear: Int(self.yearsArray.first!)!, withContributions: self.arrayContributions)
         })
         super.willTransition(to: newCollection, with: coordinator)
     }

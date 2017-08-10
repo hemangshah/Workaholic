@@ -13,16 +13,16 @@ fileprivate let valueStandardWidthForHelperView: Double = 65.0
 fileprivate let valueStandardHeightForTimeView: Double = 25.0
 fileprivate let valueStandardHeightForHelperView: Double = 25.0
 
-fileprivate let zeroPercentageLoggedColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
-fileprivate let twenty5percentageLoggedColor = UIColor.init(red: 197.0/255.0, green: 229.0/255.0, blue: 134.0/255.0, alpha: 1.0)
-fileprivate let fiftyPercentageLoggedColor = UIColor.init(red: 120.0/255.0, green: 202.0/255.0, blue: 107.0/255.0, alpha: 1.0)
-fileprivate let seventy5percentageLoggedColor = UIColor.init(red: 25.0/255.0, green: 155.0/255.0, blue: 53.0/255.0, alpha: 1.0)
-fileprivate let hundreadPercentageLoggedColor = UIColor.init(red: 20.0/255.0, green: 98.0/255.0, blue: 36.0/255.0, alpha: 1.0)
+fileprivate let zeroPercentageLoggedColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
+fileprivate let twenty5percentageLoggedColor = UIColor.colorFromRGB(r: 197.0, g: 229.0, b: 134.0, alpha: 1.0)
+fileprivate let fiftyPercentageLoggedColor = UIColor.colorFromRGB(r: 120.0, g: 202.0, b: 107.0, alpha: 1.0)
+fileprivate let seventy5percentageLoggedColor = UIColor.colorFromRGB(r: 25.0, g: 155.0, b: 53.0, alpha: 1.0)
+fileprivate let hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
 
 public class WHWorkView : UIView {
     
     fileprivate var logColorsArray = Array<UIColor>()
-    fileprivate var contributionsArray = Array<WHContributions>()
+    fileprivate var contributionsArray = Array<WHContribution>()
     
     public var onWorkLogTappedCompletion:((_ date:WHDate) -> ())? = nil
     
@@ -39,27 +39,27 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Add Workaholic View
-    fileprivate func addWorkLogs(forYear logsForYear:Int) -> Void {
+    fileprivate func addWorkLogs(forYear logsForYear: Int) -> Void {
         
         let nowYear = Date(year: logsForYear, month: 1, day: 1)
         let nowYearString = nowYear.toString(format: .isoYear)
         
-        let initialMargin:Double = 35.0
-        let margin:Double = 2.0
+        let initialMargin: Double = 35.0
+        let margin: Double = 2.0
         let numberOfLogsInColumn = nowYear.numberOfDaysInWeek()
         
-        var logBoxPointX:Double = Double(initialMargin + margin)
-        var logBoxPointY:Double = valueStandardHeightForTimeView + margin
+        var logBoxPointX: Double = Double(initialMargin + margin)
+        var logBoxPointY: Double = valueStandardHeightForTimeView + margin
         
         //Start - Calculating Box Sizes.
         //We know that there will always 12 months but for a change we are using a method to calculate total months.
-        let totalMonths:NSInteger = nowYear.numberOfMonthsInYear()
+        let totalMonths: NSInteger = nowYear.numberOfMonthsInYear()
 
         //Total numbers of Columns [Log Boxes] in each Row.
-        let numberOfColumnsInEachRow:Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
+        let numberOfColumnsInEachRow: Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
 
         //Calculate Width & Height of Log Boxes. We are taking the floor value to fixed the space.
-        let logBoxWidthAndHeight:Double = floor(((self.width() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
+        let logBoxWidthAndHeight: Double = floor(((self.width() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
         
         //Create Log Box Size.
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
@@ -218,16 +218,14 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Actions
-    @objc fileprivate func actionDayTapped(sender:WHButton) -> Void {
-        print("Tapped Worked Log for Date: \(String(describing: sender.workDate?.date!))")
-        
+    @objc fileprivate func actionDayTapped(sender: WHButton) -> Void {                
         if onWorkLogTappedCompletion != nil {
             onWorkLogTappedCompletion!(sender.workDate!)
         }
     }
     
     //MARK: Month Name
-    fileprivate func monthNameForMonthIndex(monthIndex:NSInteger) -> String {
+    fileprivate func monthNameForMonthIndex(monthIndex: NSInteger) -> String {
         
         if monthIndex == 1 {
             return "Jan"
@@ -270,7 +268,7 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Color for Work Percentage
-    fileprivate func colorForWorkPercentage(percentage:WHWorkPecentage) -> UIColor {
+    fileprivate func colorForWorkPercentage(percentage: WHWorkPecentage) -> UIColor {
         switch percentage {
         case .hundread:
             return hundreadPercentageLoggedColor
@@ -296,7 +294,7 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Create Label
-    fileprivate func createLabel(withFrame frame:CGRect, text:String, font:UIFont, textColor:UIColor, textAlignment:NSTextAlignment) -> UILabel {
+    fileprivate func createLabel(withFrame frame: CGRect, text: String, font: UIFont, textColor: UIColor, textAlignment: NSTextAlignment) -> UILabel {
         let label = UILabel.init(frame: frame)
         label.backgroundColor = UIColor.clear
         label.text = text
@@ -309,7 +307,7 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Add Helper UI [Less/More]
-    fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint:CGPoint, withLogBoxSize storedLogBoxSize:CGSize) -> Void {
+    fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint: CGPoint, withLogBoxSize storedLogBoxSize: CGSize) -> Void {
         let margin:Double = 2.0
         let numberOfColors = logColorsArray.count
         
@@ -357,13 +355,13 @@ public class WHWorkView : UIView {
         return contributionsArray.isEmpty
     }
     
-    func isContributedOnThisDate(date:Date) -> WHContributions? {
+    func isContributedOnThisDate(date: Date) -> WHContribution? {
         let results = contributionsArray.filter { $0.whcDate.compare(.isSameDay(as: date)) }
         return results.isEmpty ? nil : results.first!
     }
     
     //MARK: Setup Everything!
-    public func setup(withYear year:Int, withContributions contributions:Array<WHContributions>) -> Void {
+    public func setup(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
         clearExistingWHView()
         contributionsArray.append(contentsOf: contributions)
         self.addLogColors()

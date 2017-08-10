@@ -9,8 +9,8 @@
 import Foundation
 
 final public class WHDate {
-    public var date:Date?
-    public var day:Int?
-    public var month:Int?
-    public var year:Int?
+    public var date: Date?
+    public var day: Int?
+    public var month: Int?
+    public var year: Int?
 }

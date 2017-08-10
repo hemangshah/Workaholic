@@ -15,9 +15,9 @@ public enum WHWorkPecentage {
 /**
  You can always subclass WHContributions for your own needs.
  */
-public class WHContributions {
-    public var whcDate:Date = Date()
-    public var whcWorkPercentage:WHWorkPecentage = .zero
+public class WHContribution {
+    public var whcDate: Date = Date()
+    public var whcWorkPercentage: WHWorkPecentage = .zero
     
     public init (Date whcDate:Date, WorkPercentage whcWorkPercentage:WHWorkPecentage) {
         self.whcDate = whcDate

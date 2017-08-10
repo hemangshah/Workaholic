@@ -8,6 +8,16 @@
 
 import UIKit
 
+public extension UIColor {
+    class func RGB(r: CGFloat, g: CGFloat, b: CGFloat) -> UIColor {
+        return UIColor.init(red: r/255, green: g/255, blue: b/255, alpha: 1.0)
+    }
+    
+    class func colorFromRGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
+        return UIColor.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
+    }
+}
+
 public extension UIView {
     func width() -> Double {
         return Double(self.frame.size.width)
