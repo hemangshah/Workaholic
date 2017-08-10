@@ -8,16 +8,13 @@
 
 import Foundation
 
-/*
- 
- You can always subclass WHContributions for your own needs.
- 
-*/
-
 public enum WHWorkPecentage {
     case zero, twentyFive, fifty, seventyFive, hundread
 }
 
+/**
+ You can always subclass WHContributions for your own needs.
+ */
 public class WHContributions {
     public var whcDate:Date = Date()
     public var whcWorkPercentage:WHWorkPecentage = .zero

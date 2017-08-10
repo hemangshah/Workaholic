@@ -8,30 +8,10 @@
 
 import UIKit
 
-fileprivate extension Array {
-    var randomColor : Element {
-        let index = Int(arc4random_uniform(UInt32(count)))
-        return self[index]
-    }
-}
+fileprivate let valueStandardWidthForHelperView: Double = 65.0
 
-fileprivate extension Date {
-    func weekdayDiffence() -> Int {
-        return Calendar.current.dateComponents([.weekday], from: self).weekday ?? 0
-    }
-    
-    func dayOfWeek() -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        return dateFormatter.string(from: self).capitalized
-        // or use capitalized(with: locale) if you want
-    }
-}
-
-fileprivate let valueStandardWidthForHelperView:Double = 65.0
-
-fileprivate let valueStandardHeightForTimeView:Double = 25.0
-fileprivate let valueStandardHeightForHelperView:Double = 25.0
+fileprivate let valueStandardHeightForTimeView: Double = 25.0
+fileprivate let valueStandardHeightForHelperView: Double = 25.0
 
 fileprivate let zeroPercentageLoggedColor = UIColor.init(red: 238.0/255.0, green: 238.0/255.0, blue: 238.0/255.0, alpha: 1.0)
 fileprivate let twenty5percentageLoggedColor = UIColor.init(red: 197.0/255.0, green: 229.0/255.0, blue: 134.0/255.0, alpha: 1.0)
@@ -79,7 +59,7 @@ public class WHWorkView : UIView {
         let numberOfColumnsInEachRow:Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
 
         //Calculate Width & Height of Log Boxes. We are taking the floor value to fixed the space.
-        let logBoxWidthAndHeight:Double = floor(((self.getMyWidth() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
+        let logBoxWidthAndHeight:Double = floor(((self.width() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
         
         //Create Log Box Size.
         let logBoxSize = CGSize.init(width: Double(logBoxWidthAndHeight), height: Double(logBoxWidthAndHeight))
@@ -333,7 +313,7 @@ public class WHWorkView : UIView {
         let margin:Double = 2.0
         let numberOfColors = logColorsArray.count
         
-        let remainingDifference = (self.getMyHeight() - Double(storedLogBoxPoint.y))
+        let remainingDifference = (self.height() - Double(storedLogBoxPoint.y))
         let helperViewHeight = (remainingDifference > valueStandardHeightForHelperView) ? valueStandardHeightForHelperView : remainingDifference
         
         //Helper View

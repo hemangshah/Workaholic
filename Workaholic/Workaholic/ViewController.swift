@@ -8,38 +8,6 @@
 
 import UIKit
 
-public extension Date {
-    /// SwiftRandom extension
-    public static func randomDates(days: Int, inYear year:Int) -> Date {
-
-        let gregorian = Calendar(identifier: .gregorian)
-
-        let randomDay = arc4random_uniform(UInt32(days))
-        let randomMonth = arc4random_uniform(UInt32(12))
-        let randomHour = arc4random_uniform(UInt32(23))
-        let randomMinute = arc4random_uniform(UInt32(23))
-        let randomSecond = arc4random_uniform(UInt32(23))
-        
-        let offsetComponents = NSDateComponents()
-        offsetComponents.day = Int(randomDay)
-        offsetComponents.month = Int(randomMonth)
-        offsetComponents.year = Int(year)
-        offsetComponents.hour = Int(randomHour)
-        offsetComponents.minute = Int(randomMinute)
-        offsetComponents.second = Int(randomSecond)
-        
-        let randomeDate = gregorian.date(from: offsetComponents as DateComponents)
-
-        return randomeDate!
-    }
-    
-    /// SwiftRandom extension
-    public static func random() -> Date {
-        let randomTime = TimeInterval(arc4random_uniform(UInt32.max))
-        return Date(timeIntervalSince1970: randomTime)
-    }
-}
-
 class ViewController: UIViewController {
 
     var workView = WHWorkView()
@@ -83,7 +51,7 @@ class ViewController: UIViewController {
             }
             
             yearsSegment = UISegmentedControl(items: yearsArray)
-            yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0, width: width, height: 30.0)
+            yearsSegment.frame = CGRect.init(x: marging, y: Double(workView.frame.origin.y) + workView.height() + topMargin/2.0, width: width, height: 30.0)
             yearsSegment.selectedSegmentIndex = 0
             yearsSegment.tintColor = UIColor.black
             yearsSegment.addTarget(self, action: #selector(self.yearsfilterApply), for: UIControlEvents.valueChanged)
@@ -150,7 +118,7 @@ class ViewController: UIViewController {
     
     func correctYForYearsSegment() -> Void {
         var currentFrame = yearsSegment.frame
-        currentFrame.origin.y = CGFloat(Double(workView.frame.origin.y) + workView.getMyHeight() + topMargin/2.0)
+        currentFrame.origin.y = CGFloat(Double(workView.frame.origin.y) + workView.height() + topMargin/2.0)
         yearsSegment.frame = currentFrame
     }
     

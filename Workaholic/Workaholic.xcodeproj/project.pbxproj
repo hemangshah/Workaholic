@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F104724F1F3C89AF00B50AD6 /* WHExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */; };
 		F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11226421EED5BB8004EBE81 /* WHButton.swift */; };
 		F1429FBE1EED685E006BBCF4 /* WHDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1429FBD1EED685E006BBCF4 /* WHDate.swift */; };
 		F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0C3471EE6D14E003AB400 /* Date+Timepiece.swift */; };
@@ -20,10 +21,10 @@
 		F1BBB2D91EE536B900DF8157 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F1BBB2D71EE536B900DF8157 /* LaunchScreen.storyboard */; };
 		F1BBB2E21EE5374600DF8157 /* WHWorkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */; };
 		F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */; };
-		F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHExtensions.swift; sourceTree = "<group>"; };
 		F11226421EED5BB8004EBE81 /* WHButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHButton.swift; sourceTree = "<group>"; };
 		F1429FBD1EED685E006BBCF4 /* WHDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHDate.swift; sourceTree = "<group>"; };
 		F1A0C3471EE6D14E003AB400 /* Date+Timepiece.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Timepiece.swift"; sourceTree = "<group>"; };
@@ -39,7 +40,6 @@
 		F1BBB2DA1EE536B900DF8157 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHWorkView.swift; sourceTree = "<group>"; };
 		F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
-		F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,10 +99,10 @@
 				F1A0C3461EE6D14E003AB400 /* Timepiece */,
 				F1BBB2E51EE53B5400DF8157 /* DateHelper.swift */,
 				F1BBB2E11EE5374600DF8157 /* WHWorkView.swift */,
-				F1BBB2E71EE53C6000DF8157 /* UIViewExtension.swift */,
 				F1A0C3801EE8166D003AB400 /* WHContributions.swift */,
 				F11226421EED5BB8004EBE81 /* WHButton.swift */,
 				F1429FBD1EED685E006BBCF4 /* WHDate.swift */,
+				F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */,
 			);
 			path = Workaholic;
 			sourceTree = "<group>";
@@ -180,10 +180,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F1BBB2E81EE53C6000DF8157 /* UIViewExtension.swift in Sources */,
 				F1BBB2E61EE53B5400DF8157 /* DateHelper.swift in Sources */,
 				F1A0C34D1EE6D14E003AB400 /* Int+Timepiece.swift in Sources */,
 				F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */,
+				F104724F1F3C89AF00B50AD6 /* WHExtensions.swift in Sources */,
 				F1A0C34C1EE6D14E003AB400 /* DateComponents+Timepiece.swift in Sources */,
 				F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */,
 				F1A0C34B1EE6D14E003AB400 /* Date+Timepiece.swift in Sources */,
