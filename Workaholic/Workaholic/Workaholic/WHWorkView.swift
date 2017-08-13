@@ -131,22 +131,11 @@ public class WHWorkView : UIView {
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
-                    
-                    let workButton = WHButton()
-                    workButton.frame = CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height))
-                    workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
-                    workButton.backgroundColor = zeroPercentageLoggedColor
-                    self.addSubview(workButton)
-                    
+
                     let whDate = WHDate.init(Date: Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex), Day: columnIndex, Month: previousMonth!, Year: previousYear!)
-                    workButton.workDate = whDate
+                    let workButton = createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
-                    if !hasContributions() {
-                        let contribution = self.hasContributionsOnThisDate(date: whDate.date!)
-                        if (contribution != nil) {
-                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
-                        }
-                    }
+                    self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
                         logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
@@ -156,14 +145,8 @@ public class WHWorkView : UIView {
                         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
-                    
-                    if showDaysInWorkView {
-                        workButton.setTitleColor(.black, for: .normal)
-                        workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
-                        workButton.setTitle(String(columnIndex), for: .normal)
-                    } else {
-                        workButton.setTitle("", for: .normal)
-                    }
+
+                    self.updateWorkButtonToShowDaysLabel(WorkButton: workButton, Day: columnIndex)
                 }
                 //End – Internal Loop
                 //------------------------------------------------------------------------
@@ -179,21 +162,10 @@ public class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
                     
-                    let workButton = WHButton()
-                    workButton.frame = CGRect.init(x: Double(logBoxPointX), y: Double(logBoxPointY), width: Double(logBoxSize.width), height: Double(logBoxSize.height))
-                    workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
-                    workButton.backgroundColor = zeroPercentageLoggedColor
-                    self.addSubview(workButton)
-                                        
                     let whDate = WHDate.init(Date: Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex), Day: columnIndex, Month: currentMonth!, Year: currentYear!)
-                    workButton.workDate = whDate
+                    let workButton = createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
-                    if !hasContributions() {
-                        let contribution = hasContributionsOnThisDate(date: whDate.date!)
-                        if (contribution != nil) {
-                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
-                        }
-                    }
+                    self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
                     
                     if logsInColumnCounter % numberOfLogsInColumn == 0 {
                         logBoxPointX = logBoxPointX + Double(logBoxSize.width) + margin
@@ -204,13 +176,7 @@ public class WHWorkView : UIView {
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
                     
-                    if showDaysInWorkView {
-                        workButton.setTitleColor(.black, for: .normal)
-                        workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
-                        workButton.setTitle(String(columnIndex), for: .normal)
-                    } else {
-                        workButton.setTitle("", for: .normal)
-                    }
+                    self.updateWorkButtonToShowDaysLabel(WorkButton: workButton, Day: columnIndex)
                     
                     //------------------------------------------------------------------------
                     //Start - Months Label
@@ -276,6 +242,17 @@ public class WHWorkView : UIView {
         logColors.append(hundreadPercentageLoggedColor)
     }
     
+    //MARK: Create Button
+    fileprivate func createWHButton(withOrigin origin: CGPoint, size: CGSize, Date whDate: WHDate) -> WHButton {
+        let workButton = WHButton()
+        workButton.frame = CGRect.init(origin: origin, size: size)
+        workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
+        workButton.backgroundColor = zeroPercentageLoggedColor
+        self.addSubview(workButton)
+        workButton.workDate = whDate
+        return workButton
+    }
+    
     //MARK: Create Label
     fileprivate func createLabel(withFrame frame: CGRect, text: String, font: UIFont, textColor: UIColor, textAlignment: NSTextAlignment) -> UILabel {
         let label = UILabel.init(frame: frame)
@@ -287,6 +264,27 @@ public class WHWorkView : UIView {
         label.minimumScaleFactor = (UIFont.labelFontSize/2)/UIFont.labelFontSize
         label.adjustsFontSizeToFitWidth = true
         return label
+    }
+    
+    //MARK: Update WorkButton based on the Contributions.
+    fileprivate func updateWorkButtonAsPerTheContributions(WorkButton workButton: WHButton, Date whDate: WHDate) {
+        if !hasContributions() {
+            let contribution = hasContributionsOnThisDate(date: whDate.date!)
+            if (contribution != nil) {
+                workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
+            }
+        }
+    }
+    
+    //MARK: Show/Hide Days Value In WorkButton
+    fileprivate func updateWorkButtonToShowDaysLabel(WorkButton workButton: WHButton, Day day: Int) {
+        if showDaysInWorkView {
+            workButton.setTitleColor(.black, for: .normal)
+            workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
+            workButton.setTitle(String(day), for: .normal)
+        } else {
+            workButton.setTitle("", for: .normal)
+        }
     }
     
     //MARK: Add Helper UI [Less/More]
