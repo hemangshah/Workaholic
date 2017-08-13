@@ -138,17 +138,11 @@ public class WHWorkView : UIView {
                     workButton.backgroundColor = zeroPercentageLoggedColor
                     self.addSubview(workButton)
                     
-                    let whDate = WHDate.init()
-                    whDate.date = Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex)
-                    whDate.day = columnIndex
-                    whDate.month = previousMonth
-                    whDate.year = previousYear
-                    
-                    let currentDateOfLoop = whDate.date!
+                    let whDate = WHDate.init(Date: Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex), Day: columnIndex, Month: previousMonth!, Year: previousYear!)
                     workButton.workDate = whDate
                     
                     if !hasContributions() {
-                        let contribution = self.hasContributionsOnThisDate(date: currentDateOfLoop)
+                        let contribution = self.hasContributionsOnThisDate(date: whDate.date!)
                         if (contribution != nil) {
                             workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
                         }
@@ -191,17 +185,11 @@ public class WHWorkView : UIView {
                     workButton.backgroundColor = zeroPercentageLoggedColor
                     self.addSubview(workButton)
                                         
-                    let whDate = WHDate.init()
-                    whDate.date = Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex)
-                    whDate.day = columnIndex
-                    whDate.month = currentMonth
-                    whDate.year = currentYear
-                    
-                    let currentDateOfLoop = whDate.date!
+                    let whDate = WHDate.init(Date: Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex), Day: columnIndex, Month: currentMonth!, Year: currentYear!)
                     workButton.workDate = whDate
                     
                     if !hasContributions() {
-                        let contribution = hasContributionsOnThisDate(date: currentDateOfLoop)
+                        let contribution = hasContributionsOnThisDate(date: whDate.date!)
                         if (contribution != nil) {
                             workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
                         }
@@ -337,7 +325,7 @@ public class WHWorkView : UIView {
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
     
-    //MARK: Setup Helpers
+    //MARK: Helpers
     fileprivate func cleanWorkView() -> Void {
         contributions.clean()
         for allTheSubviews in self.subviews {

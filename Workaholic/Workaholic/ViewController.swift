@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     var workView = WHWorkView()
     var yearsSegment = UISegmentedControl()
     
-    var yearsArray = Array<String>()
+    var years = Array<String>()
     var contributions = Array<WHContribution>()
     
     let topMargin: Double = 80.0
@@ -41,8 +41,8 @@ class ViewController: UIViewController {
             workView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin]
             self.view.addSubview(workView)
             //Please set any properties before calling workView.setup().
-            workView.reload(withYear: Int(yearsArray.first!)!, withContributions: contributions)
-            printSampleDataForYear(year: Int(yearsArray.first!)!)
+            workView.reload(withYear: Int(years.first!)!, withContributions: contributions)
+            printSampleDataForYear(year: Int(years.first!)!)
             
             //Detect Taps on Work Logs
             workView.onWorkLogTapCompletion = { (whDate) in
@@ -57,14 +57,14 @@ class ViewController: UIViewController {
     //MARK: Create Years
     fileprivate func createYears() {
         for year in 2008...2017 {
-            yearsArray.append(String(year))
+            years.append(String(year))
         }
-        yearsArray.reverse()
+        years.reverse()
     }
     
     //MARK: Setup Year UISegmentControl
     fileprivate func setupYearSegment(withMargin margin: Double, width: Double) {
-        yearsSegment = UISegmentedControl(items: yearsArray)
+        yearsSegment = UISegmentedControl(items: years)
         yearsSegment.frame = CGRect.init(x: margin, y: Double(workView.frame.origin.y) + workView.height() + topMargin/2.0, width: width, height: 30.0)
         yearsSegment.selectedSegmentIndex = 0
         yearsSegment.tintColor = UIColor.black
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
     
     //MARK: Segnement Target
     @objc fileprivate func actionYearsFilterApply(segment: UISegmentedControl) -> Void {
-        let yearString = yearsArray[segment.selectedSegmentIndex]
+        let yearString = years[segment.selectedSegmentIndex]
         workView.reload(withYear: Int(yearString)!, withContributions: contributions)
         printSampleDataForYear(year: Int(yearString)!)
     }
@@ -124,7 +124,7 @@ class ViewController: UIViewController {
         }, completion: { _ in
             //Rotation completed
             self.correctYForYearsSegment()
-            self.workView.reload(withYear: Int(self.yearsArray.first!)!, withContributions: self.contributions)
+            self.workView.reload(withYear: Int(self.years.first!)!, withContributions: self.contributions)
         })
         super.willTransition(to: newCollection, with: coordinator)
     }
