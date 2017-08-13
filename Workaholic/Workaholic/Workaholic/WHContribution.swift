@@ -19,7 +19,7 @@ public class WHContribution {
     public var whcDate: Date = Date()
     public var whcWorkPercentage: WHWorkPecentage = .zero
     
-    public init (Date whcDate:Date, WorkPercentage whcWorkPercentage:WHWorkPecentage) {
+    public init (Date whcDate: Date, WorkPercentage whcWorkPercentage: WHWorkPecentage) {
         self.whcDate = whcDate
         self.whcWorkPercentage = whcWorkPercentage
     }

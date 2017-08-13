@@ -9,14 +9,13 @@
 import UIKit
 
 fileprivate let valueStandardWidthForHelperView: Double = 65.0
-
 fileprivate let valueStandardHeightForTimeView: Double = 25.0
 fileprivate let valueStandardHeightForHelperView: Double = 25.0
 
 public class WHWorkView : UIView {
     
-    fileprivate var logColorsArray = Array<UIColor>()
-    fileprivate var contributionsArray = Array<WHContribution>()
+    fileprivate var logColors = Array<UIColor>()
+    fileprivate var contributions = Array<WHContribution>()
     
     public var onWorkLogTappedCompletion:((_ date: WHDate) -> ())? = nil
     
@@ -25,13 +24,14 @@ public class WHWorkView : UIView {
     public var fiftyPercentageLoggedColor = UIColor.colorFromRGB(r: 120.0, g: 202.0, b: 107.0, alpha: 1.0)
     public var seventy5percentageLoggedColor = UIColor.colorFromRGB(r: 25.0, g: 155.0, b: 53.0, alpha: 1.0)
     public var hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
+    public var workViewBorderColor = UIColor.lightGray.cgColor
     
     //MARK: Init with Frame
     override public init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.lightGray.cgColor
+        self.layer.borderColor = workViewBorderColor
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -285,12 +285,12 @@ public class WHWorkView : UIView {
     
     //MARK: Add Logging Colors[0% to 100%]
     fileprivate func addLogColors() -> Void {
-        logColorsArray.removeAll()
-        logColorsArray.append(zeroPercentageLoggedColor)
-        logColorsArray.append(twenty5percentageLoggedColor)
-        logColorsArray.append(fiftyPercentageLoggedColor)
-        logColorsArray.append(seventy5percentageLoggedColor)
-        logColorsArray.append(hundreadPercentageLoggedColor)
+        logColors.removeAll()
+        logColors.append(zeroPercentageLoggedColor)
+        logColors.append(twenty5percentageLoggedColor)
+        logColors.append(fiftyPercentageLoggedColor)
+        logColors.append(seventy5percentageLoggedColor)
+        logColors.append(hundreadPercentageLoggedColor)
     }
     
     //MARK: Create Label
@@ -309,7 +309,7 @@ public class WHWorkView : UIView {
     //MARK: Add Helper UI [Less/More]
     fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint: CGPoint, withLogBoxSize storedLogBoxSize: CGSize) -> Void {
         let margin:Double = 2.0
-        let numberOfColors = logColorsArray.count
+        let numberOfColors = logColors.count
         
         let remainingDifference = (self.height() - Double(storedLogBoxPoint.y))
         let helperViewHeight = (remainingDifference > valueStandardHeightForHelperView) ? valueStandardHeightForHelperView : remainingDifference
@@ -330,7 +330,7 @@ public class WHWorkView : UIView {
         
         for index in 0..<numberOfColors {
             let helpLogLabel = UILabel.init(frame: CGRect.init(x: helperBoxPointX, y: 0.0, width: Double(storedLogBoxSize.width), height: Double(storedLogBoxSize.height)))
-            helpLogLabel.backgroundColor = logColorsArray[index]
+            helpLogLabel.backgroundColor = logColors[index]
             helperView.addSubview(helpLogLabel)
             helperBoxPointX = helperBoxPointX + Double(helpLogLabel.frame.size.width) + margin
             helpLogLabel.center = CGPoint.init(x: helpLogLabel.center.x, y: helperView.frame.size.height/2.0)
@@ -344,7 +344,7 @@ public class WHWorkView : UIView {
     
     //MARK: Setup Helpers
     fileprivate func clearExistingWHView() -> Void {
-        contributionsArray.removeAll()
+        contributions.removeAll()
         for allTheSubviews in self.subviews {
             allTheSubviews.removeFromSuperview()
         }
@@ -352,18 +352,18 @@ public class WHWorkView : UIView {
     
     //MARK: Contributions Check
     func isContributionsEmpty() -> Bool {
-        return contributionsArray.isEmpty
+        return contributions.isEmpty
     }
     
     func isContributedOnThisDate(date: Date) -> WHContribution? {
-        let results = contributionsArray.filter { $0.whcDate.compare(.isSameDay(as: date)) }
+        let results = contributions.filter { $0.whcDate.compare(.isSameDay(as: date)) }
         return results.isEmpty ? nil : results.first!
     }
     
     //MARK: Setup Everything!
     public func setup(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
         clearExistingWHView()
-        contributionsArray.append(contentsOf: contributions)
+        self.contributions.append(contentsOf: contributions)
         self.addLogColors()
         self.addWorkLogs(forYear: year)
     }

@@ -8,6 +8,6 @@
 
 import UIKit
 
-final public class WHButton : UIButton {
-    public var workDate:WHDate?
+final public class WHButton: UIButton {
+    public var workDate: WHDate?
 }
