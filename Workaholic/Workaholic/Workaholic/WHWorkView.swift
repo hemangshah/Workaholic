@@ -18,7 +18,7 @@ public class WHWorkView : UIView {
     fileprivate var contributions = Array<WHContribution>()
     
     ///Get Taps when user taps on a day in WorkView.
-    public var onWorkLogTappedCompletion:((_ date: WHDate) -> ())? = nil
+    public var onWorkLogTapCompletion:((_ date: WHDate) -> ())? = nil
     
     ///Set color when there's no log history.
     public var zeroPercentageLoggedColor: UIColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
@@ -232,8 +232,8 @@ public class WHWorkView : UIView {
     
     //MARK: Actions
     @objc fileprivate func actionDayTapped(sender: WHButton) -> Void {                
-        if onWorkLogTappedCompletion != nil {
-            onWorkLogTappedCompletion!(sender.workDate!)
+        if onWorkLogTapCompletion != nil {
+            onWorkLogTapCompletion!(sender.workDate!)
         }
     }
     
@@ -338,7 +338,7 @@ public class WHWorkView : UIView {
     
     //MARK: Setup
     ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
-    public func setup(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
+    public func reload(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
         cleanWorkView()
         self.contributions.append(contentsOf: contributions)
         self.addLogColors()
