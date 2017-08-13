@@ -17,17 +17,35 @@ public class WHWorkView : UIView {
     fileprivate var logColors = Array<UIColor>()
     fileprivate var contributions = Array<WHContribution>()
     
+    ///Get Taps when user taps on a day in WorkView.
     public var onWorkLogTappedCompletion:((_ date: WHDate) -> ())? = nil
     
+    ///Set color when there's no log history.
     public var zeroPercentageLoggedColor: UIColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
+    ///Set color when there's 25% log history.
     public var twenty5percentageLoggedColor = UIColor.colorFromRGB(r: 197.0, g: 229.0, b: 134.0, alpha: 1.0)
+    ///Set color when there's 50% log history.
     public var fiftyPercentageLoggedColor = UIColor.colorFromRGB(r: 120.0, g: 202.0, b: 107.0, alpha: 1.0)
+    ///Set color when there's 75% log history.
     public var seventy5percentageLoggedColor = UIColor.colorFromRGB(r: 25.0, g: 155.0, b: 53.0, alpha: 1.0)
+    ///Set color when there's 100% log history.
     public var hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
+    ///Set border color for WorkView.
     public var workViewBorderColor = UIColor.lightGray.cgColor
     
+    ///Set days for WorkView (at left). Usage: to set localize days.
     public var workViewDays = ["Mon", "Wed", "Fri"]
+    ///Set months for WorkView (at top). Usage: to set localize months.
     public var workViewMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    
+    ///Days Label Title Color
+    public var daysLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
+    ///Months Label Title Color
+    public var monthLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
+    ///Less Label Title Color
+    public var lessLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
+    ///More Label Title Color
+    public var moreLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
     
     //MARK: Init with Frame
     override public init(frame: CGRect) {
@@ -75,7 +93,7 @@ public class WHWorkView : UIView {
         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
         
         for rowIndex in 1...3 {
-            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: ((logBoxSize.width >= 10) ? 8.0 : 5.0)), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
+            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: ((logBoxSize.width >= 10) ? 8.0 : 5.0)), textColor: self.daysLabelTitleColor, textAlignment: .right)
             let arrayIndex = (rowIndex - 1 )
             daysLabel.text = workViewDays[arrayIndex]
             self.addSubview(daysLabel)
@@ -126,10 +144,10 @@ public class WHWorkView : UIView {
                     let currentDateOfLoop = whDate.date!
                     workButton.workDate = whDate
                     
-                    if !isContributionsEmpty() {
-                        let contribution = isContributedOnThisDate(date: currentDateOfLoop)
+                    if !hasContributions() {
+                        let contribution = self.hasContributionsOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workButton.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
                         }
                     }
                     
@@ -171,10 +189,10 @@ public class WHWorkView : UIView {
                     let currentDateOfLoop = whDate.date!
                     workButton.workDate = whDate
                     
-                    if !isContributionsEmpty() {
-                        let contribution = isContributedOnThisDate(date: currentDateOfLoop)
+                    if !hasContributions() {
+                        let contribution = hasContributionsOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workButton.backgroundColor = colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
                         }
                     }
                     
@@ -193,7 +211,7 @@ public class WHWorkView : UIView {
                     
                     if previousMonthIndex != monthIndex {
                         previousMonthIndex = monthIndex
-                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: monthNameForMonthIndex(monthIndex: monthIndex), font: UIFont.systemFont(ofSize: 10.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .center)
+                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: self.monthNameForMonthIndex(monthIndex: monthIndex), font: UIFont.systemFont(ofSize: 10.0), textColor: self.monthLabelTitleColor, textAlignment: .center)
                         self.addSubview(monthLabel)
                     }
                     
@@ -243,7 +261,7 @@ public class WHWorkView : UIView {
     
     //MARK: Add Logging Colors[0% to 100%]
     fileprivate func addLogColors() -> Void {
-        logColors.removeAll()
+        logColors.clean()
         logColors.append(zeroPercentageLoggedColor)
         logColors.append(twenty5percentageLoggedColor)
         logColors.append(fiftyPercentageLoggedColor)
@@ -279,7 +297,7 @@ public class WHWorkView : UIView {
         self.addSubview(helperView)
 
         //Label: Less
-        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .left)
+        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: UIFont.systemFont(ofSize: 8.0), textColor: lessLabelTitleColor, textAlignment: .left)
         helperView.addSubview(helpLabelLess)
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
@@ -295,32 +313,33 @@ public class WHWorkView : UIView {
         }
         
         //Label: More
-        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: UIFont.systemFont(ofSize: 8.0), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
+        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: UIFont.systemFont(ofSize: 8.0), textColor: moreLabelTitleColor, textAlignment: .right)
         helperView.addSubview(helpLabelMore)
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
     
     //MARK: Setup Helpers
-    fileprivate func clearExistingWHView() -> Void {
-        contributions.removeAll()
+    fileprivate func cleanWorkView() -> Void {
+        contributions.clean()
         for allTheSubviews in self.subviews {
             allTheSubviews.removeFromSuperview()
         }
     }
     
     //MARK: Contributions Check
-    func isContributionsEmpty() -> Bool {
+    fileprivate func hasContributions() -> Bool {
         return contributions.isEmpty
     }
     
-    func isContributedOnThisDate(date: Date) -> WHContribution? {
+    fileprivate func hasContributionsOnThisDate(date: Date) -> WHContribution? {
         let results = contributions.filter { $0.whcDate.compare(.isSameDay(as: date)) }
         return results.isEmpty ? nil : results.first!
     }
     
-    //MARK: Setup Everything!
+    //MARK: Setup
+    ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
     public func setup(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
-        clearExistingWHView()
+        cleanWorkView()
         self.contributions.append(contentsOf: contributions)
         self.addLogColors()
         self.addWorkLogs(forYear: year)
