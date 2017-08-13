@@ -147,7 +147,7 @@ public class WHWorkView : UIView {
                     if !hasContributions() {
                         let contribution = self.hasContributionsOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
                         }
                     }
                     
@@ -192,7 +192,7 @@ public class WHWorkView : UIView {
                     if !hasContributions() {
                         let contribution = hasContributionsOnThisDate(date: currentDateOfLoop)
                         if (contribution != nil) {
-                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.whcWorkPercentage)
+                            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
                         }
                     }
                     
@@ -244,7 +244,7 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Color for Work Percentage
-    fileprivate func colorForWorkPercentage(percentage: WHWorkPecentage) -> UIColor {
+    fileprivate func colorForWorkPercentage(percentage: WorkPecentage) -> UIColor {
         switch percentage {
         case .hundread:
             return hundreadPercentageLoggedColor
@@ -332,7 +332,7 @@ public class WHWorkView : UIView {
     }
     
     fileprivate func hasContributionsOnThisDate(date: Date) -> WHContribution? {
-        let results = contributions.filter { $0.whcDate.compare(.isSameDay(as: date)) }
+        let results = contributions.filter { $0.date.compare(.isSameDay(as: date)) }
         return results.isEmpty ? nil : results.first!
     }
     

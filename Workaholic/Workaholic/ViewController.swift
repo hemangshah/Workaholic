@@ -91,10 +91,10 @@ class ViewController: UIViewController {
     //MARK: Print Sample Data
     fileprivate func printSampleDataForYear(year: Int) -> Void {
         print("--------------- Sample Data for Year: \(year) ---------------")
-        let results = contributions.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
+        let results = contributions.filter { $0.date.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
         if !results.isEmpty {
             for contribution in results {
-                print("\n\(contribution.whcDate)")
+                print("\n\(contribution.date)")
             }
         } else {
             print("\n No Sample Data Available.")
