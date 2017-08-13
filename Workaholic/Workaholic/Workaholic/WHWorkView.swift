@@ -26,6 +26,9 @@ public class WHWorkView : UIView {
     public var hundreadPercentageLoggedColor = UIColor.colorFromRGB(r: 20.0, g: 98.0, b: 36.0, alpha: 1.0)
     public var workViewBorderColor = UIColor.lightGray.cgColor
     
+    public var workViewDays = ["Mon", "Wed", "Fri"]
+    public var workViewMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    
     //MARK: Init with Frame
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,16 +76,8 @@ public class WHWorkView : UIView {
         
         for rowIndex in 1...3 {
             let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: ((logBoxSize.width >= 10) ? 8.0 : 5.0)), textColor: UIColor.init(red: 118.0/255.0, green: 118.0/255.0, blue: 118.0/255.0, alpha: 1.0), textAlignment: .right)
-            
-            if rowIndex == 1 {
-                daysLabel.text = "Mon"
-                
-            } else if rowIndex == 2 {
-                daysLabel.text = "Wed"
-                
-            } else if rowIndex == 3 {
-                daysLabel.text = "Fri"
-            }
+            let arrayIndex = (rowIndex - 1 )
+            daysLabel.text = workViewDays[arrayIndex]
             self.addSubview(daysLabel)
             logBoxPointY = logBoxPointY + Double(logBoxSize.height * 2.0) + (margin * 2.0)
         }
@@ -226,45 +221,8 @@ public class WHWorkView : UIView {
     
     //MARK: Month Name
     fileprivate func monthNameForMonthIndex(monthIndex: NSInteger) -> String {
-        
-        if monthIndex == 1 {
-            return "Jan"
-            
-        } else if monthIndex == 2 {
-            return "Feb"
-            
-        } else if monthIndex == 3 {
-            return "Mar"
-            
-        } else if monthIndex == 4 {
-            return "Apr"
-            
-        } else if monthIndex == 5 {
-            return "May"
-            
-        } else if monthIndex == 6 {
-            return "Jun"
-            
-        } else if monthIndex == 7 {
-            return "Jul"
-            
-        } else if monthIndex == 8 {
-            return "Aug"
-            
-        } else if monthIndex == 9 {
-            return "Sep"
-            
-        } else if monthIndex == 10 {
-            return "Oct"
-            
-        } else if monthIndex == 11 {
-            return "Nov"
-            
-        } else if monthIndex == 12 {
-            return "Dec"
-            
-        }
-        return ""
+        let arrayIndex = (monthIndex - 1)
+        return self.workViewMonths[arrayIndex]
     }
     
     //MARK: Color for Work Percentage
