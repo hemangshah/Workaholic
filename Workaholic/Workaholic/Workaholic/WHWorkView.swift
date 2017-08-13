@@ -38,14 +38,17 @@ public class WHWorkView : UIView {
     ///Set months for WorkView (at top). Usage: to set localize months.
     public var workViewMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     
-    ///Days Label Title Color
+    ///Days Label Title Color.
     public var daysLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
-    ///Months Label Title Color
+    ///Months Label Title Color.
     public var monthLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
-    ///Less Label Title Color
+    ///Less Label Title Color.
     public var lessLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
-    ///More Label Title Color
+    ///More Label Title Color.
     public var moreLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
+    
+    ///Show Days In WorkView.
+    public var showDaysInWorkView = false
     
     //MARK: Init with Frame
     override public init(frame: CGRect) {
@@ -159,6 +162,14 @@ public class WHWorkView : UIView {
                         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
                         logsInColumnCounter = logsInColumnCounter + 1
                     }
+                    
+                    if showDaysInWorkView {
+                        workButton.setTitleColor(.black, for: .normal)
+                        workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
+                        workButton.setTitle(String(columnIndex), for: .normal)
+                    } else {
+                        workButton.setTitle("", for: .normal)
+                    }
                 }
                 //End – Internal Loop
                 //------------------------------------------------------------------------
@@ -203,6 +214,14 @@ public class WHWorkView : UIView {
                     } else {
                         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
                         logsInColumnCounter = logsInColumnCounter + 1
+                    }
+                    
+                    if showDaysInWorkView {
+                        workButton.setTitleColor(.black, for: .normal)
+                        workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
+                        workButton.setTitle(String(columnIndex), for: .normal)
+                    } else {
+                        workButton.setTitle("", for: .normal)
                     }
                     
                     //------------------------------------------------------------------------
