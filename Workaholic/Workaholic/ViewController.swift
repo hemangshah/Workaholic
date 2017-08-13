@@ -25,12 +25,7 @@ class ViewController: UIViewController {
         
         //Sample Contributions
         createContributions()
-        
-        //Create Years Array
-        for year in 2008...2017 {
-            yearsArray.append(String(year))
-        }
-        yearsArray.reverse()
+        createYears()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,7 +33,7 @@ class ViewController: UIViewController {
         
         //To set the correct height of WHWorkView, right now we have to add it in viewDidAppear to get the correct orientation of the view.
         if UIDevice.current.orientation.isValidInterfaceOrientation {
-            let height = getHeightBasedOnOrientation()
+            let height = getWorkViewHeightAsPerTheOrientation()
             let margin: Double = 20.0
             let width: Double = Double(UIScreen.main.bounds.size.width) - (margin * 2.0)
             
@@ -59,7 +54,16 @@ class ViewController: UIViewController {
         }
     }
     
-    internal func setupYearSegment(withMargin margin: Double, width: Double) {
+    //MARK: Create Years
+    fileprivate func createYears() {
+        for year in 2008...2017 {
+            yearsArray.append(String(year))
+        }
+        yearsArray.reverse()
+    }
+    
+    //MARK: Setup Year UISegmentControl
+    fileprivate func setupYearSegment(withMargin margin: Double, width: Double) {
         yearsSegment = UISegmentedControl(items: yearsArray)
         yearsSegment.frame = CGRect.init(x: margin, y: Double(workView.frame.origin.y) + workView.height() + topMargin/2.0, width: width, height: 30.0)
         yearsSegment.selectedSegmentIndex = 0
@@ -70,7 +74,7 @@ class ViewController: UIViewController {
     }
     
     //MARK: Sample WHContributions Objects
-    func createContributions() -> Void {
+    fileprivate func createContributions() -> Void {
         contributions.removeAll()
         contributions.append(WHContribution.init(Date: Date.randomDates(days: 1, inYear: 2017), WorkPercentage: .twentyFive))
         contributions.append(WHContribution.init(Date: Date.randomDates(days: 2, inYear: 2017), WorkPercentage: .fifty))
@@ -85,7 +89,7 @@ class ViewController: UIViewController {
     }
     
     //MARK: Print Sample Data
-    func printSampleDataForYear(year:Int) -> Void {
+    fileprivate func printSampleDataForYear(year: Int) -> Void {
         print("--------------- Sample Data for Year: \(year) ---------------")
         let results = contributions.filter { $0.whcDate.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
         if !results.isEmpty {
@@ -99,7 +103,7 @@ class ViewController: UIViewController {
     }
     
     //MARK: Segnement Target
-    @objc fileprivate func yearsfilterApply(segment:UISegmentedControl) -> Void {
+    @objc fileprivate func yearsfilterApply(segment: UISegmentedControl) -> Void {
         let yearString = yearsArray[segment.selectedSegmentIndex]
         workView.setup(withYear: Int(yearString)!, withContributions: contributions)
         printSampleDataForYear(year: Int(yearString)!)
@@ -125,19 +129,19 @@ class ViewController: UIViewController {
         super.willTransition(to: newCollection, with: coordinator)
     }
     
-    func correctYForYearsSegment() -> Void {
+    fileprivate func correctYForYearsSegment() -> Void {
         var currentFrame = yearsSegment.frame
         currentFrame.origin.y = CGFloat(Double(workView.frame.origin.y) + workView.height() + topMargin/2.0)
         yearsSegment.frame = currentFrame
     }
     
-    func correctHeightForWorkView(withHeight height:Double) -> Void {
+    fileprivate func correctHeightForWorkView(withHeight height: Double) -> Void {
         var currentFrame = workView.frame
         currentFrame.size.height = CGFloat(height)
         workView.frame = currentFrame
     }
     
-    func getHeightBasedOnOrientation() -> Double {
+    fileprivate func getWorkViewHeightAsPerTheOrientation() -> Double {
         if UIDevice.current.orientation.isValidInterfaceOrientation {
             if UIDevice.current.orientation.isLandscape {
                 return 140.0
