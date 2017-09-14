@@ -25,8 +25,8 @@ A Github's like work contribution timeline.
 - [x] Orientation Change Support.
 - [x] Customization Options.
 - [x] Customize Fonts, Text/ Background/ Log Colors.
+- [x] Localize Months and Days. [Note: Use workViewDays or workViewMonths to provide localized Months and Days ]
 - [ ] Show/Hide Day Numbers in Log Boxes.
-- [ ] Localize Months and Days.
 - [ ] Remove Dependancies of 3rd Party classes.
 - [ ] Code Refactoring.
 
