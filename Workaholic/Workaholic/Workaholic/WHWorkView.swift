@@ -47,6 +47,17 @@ public class WHWorkView : UIView {
     ///More Label Title Color.
     public var moreLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
     
+    ///Days Label Title Font
+    public var daysLabelTitleFont = UIFont.systemFont(ofSize: 5.0)
+    ///Months Label Title Font
+    public var monthLabelTitleFont = UIFont.systemFont(ofSize: 10.0)
+    ///More Label Title Font
+    public var moreLabelTitleFont = UIFont.systemFont(ofSize: 8.0)
+    ///Less Label Title Font
+    public var lessLabelTitleFont = UIFont.systemFont(ofSize: 8.0)
+    ///Day Number Label Title Font
+    public var daysNumberLabelTitleFont = UIFont.systemFont(ofSize: 3.0)
+    
     ///Show Days In WorkView.
     public var showDaysInWorkView = false
     
@@ -96,7 +107,7 @@ public class WHWorkView : UIView {
         logBoxPointY = logBoxPointY + Double(logBoxSize.height) + margin
         
         for rowIndex in 1...3 {
-            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: UIFont.systemFont(ofSize: ((logBoxSize.width >= 10) ? 8.0 : 5.0)), textColor: self.daysLabelTitleColor, textAlignment: .right)
+            let daysLabel = createLabel(withFrame: CGRect.init(x: margin, y: logBoxPointY, width: initialMargin - (margin * 2.0), height: Double(logBoxSize.height)), text: "", font: self.daysLabelTitleFont, textColor: self.daysLabelTitleColor, textAlignment: .right)
             let arrayIndex = (rowIndex - 1 )
             daysLabel.text = workViewDays[arrayIndex]
             self.addSubview(daysLabel)
@@ -184,7 +195,7 @@ public class WHWorkView : UIView {
                     
                     if previousMonthIndex != monthIndex {
                         previousMonthIndex = monthIndex
-                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: self.monthNameForMonthIndex(monthIndex: monthIndex), font: UIFont.systemFont(ofSize: 10.0), textColor: self.monthLabelTitleColor, textAlignment: .center)
+                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: self.monthNameForMonthIndex(monthIndex: monthIndex), font: self.monthLabelTitleFont, textColor: self.monthLabelTitleColor, textAlignment: .center)
                         self.addSubview(monthLabel)
                     }
                     
@@ -280,7 +291,7 @@ public class WHWorkView : UIView {
     fileprivate func updateWorkButtonToShowDaysLabel(WorkButton workButton: WHButton, Day day: Int) {
         if showDaysInWorkView {
             workButton.setTitleColor(.black, for: .normal)
-            workButton.titleLabel?.font = UIFont.systemFont(ofSize: 3.0)
+            workButton.titleLabel?.font = self.daysNumberLabelTitleFont
             workButton.setTitle(String(day), for: .normal)
         } else {
             workButton.setTitle("", for: .normal)
@@ -302,7 +313,7 @@ public class WHWorkView : UIView {
         self.addSubview(helperView)
 
         //Label: Less
-        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: UIFont.systemFont(ofSize: 8.0), textColor: lessLabelTitleColor, textAlignment: .left)
+        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: self.lessLabelTitleFont, textColor: lessLabelTitleColor, textAlignment: .left)
         helperView.addSubview(helpLabelLess)
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
@@ -318,7 +329,7 @@ public class WHWorkView : UIView {
         }
         
         //Label: More
-        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: UIFont.systemFont(ofSize: 8.0), textColor: moreLabelTitleColor, textAlignment: .right)
+        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: self.moreLabelTitleFont, textColor: moreLabelTitleColor, textAlignment: .right)
         helperView.addSubview(helpLabelMore)
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
