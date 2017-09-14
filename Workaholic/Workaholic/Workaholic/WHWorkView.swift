@@ -16,6 +16,8 @@ public class WHWorkView : UIView {
     
     fileprivate var logColors = Array<UIColor>()
     fileprivate var contributions = Array<WHContribution>()
+    fileprivate var dateFormatter = DateFormatter.init()
+    fileprivate var filteredDates: Dictionary<String, WHContribution> = Dictionary.init()
     
     ///Get Taps when user taps on a day in WorkView.
     public var onWorkLogTapCompletion:((_ date: WHDate) -> ())? = nil
@@ -67,6 +69,9 @@ public class WHWorkView : UIView {
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
         self.layer.borderColor = self.workViewBorderColor
+        self.dateFormatter.dateFormat = "dd-MM-yyyy"
+        //self.dateFormatter.calendar = Calendar.current
+        //self.dateFormatter.timeZone = Calendar.current.timeZone
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -75,7 +80,7 @@ public class WHWorkView : UIView {
     
     //MARK: Add Workaholic View
     fileprivate func addWorkLogs(forYear logsForYear: Int) -> Void {
-        
+
         let nowYear = Date(year: logsForYear, month: 1, day: 1)
         let nowYearString = nowYear.toString(format: .isoYear)
         
@@ -142,8 +147,8 @@ public class WHWorkView : UIView {
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
-
-                    let whDate = WHDate.init(Date: Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex), Day: columnIndex, Month: previousMonth!, Year: previousYear!)
+                    let previousYearDate = Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex)
+                    let whDate = WHDate.init(withDate: previousYearDate, day: columnIndex, month: previousMonth!, Year: previousYear!, comparableDateAsString: self.dateFormatter.string(from: previousYearDate))
                     let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
@@ -164,7 +169,7 @@ public class WHWorkView : UIView {
                 
             } else {
                 
-                let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-M-yyyy"))
+                let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-MM-yyyy"))
                 let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
                 let currentYear = dateOfMonth?.year
                 let currentMonth = dateOfMonth?.month
@@ -172,8 +177,8 @@ public class WHWorkView : UIView {
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
-                    
-                    let whDate = WHDate.init(Date: Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex), Day: columnIndex, Month: currentMonth!, Year: currentYear!)
+                    let currentYearDate = Date(year: currentYear!, month: currentMonth!, day: columnIndex)
+                    let whDate = WHDate.init(withDate: currentYearDate, day: columnIndex, month: currentMonth!, Year: currentYear!, comparableDateAsString: self.dateFormatter.string(from: currentYearDate))
                     let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
@@ -195,7 +200,7 @@ public class WHWorkView : UIView {
                     
                     if previousMonthIndex != monthIndex {
                         previousMonthIndex = monthIndex
-                        let monthLabel = createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: self.monthNameForMonthIndex(monthIndex: monthIndex), font: self.monthLabelTitleFont, textColor: self.monthLabelTitleColor, textAlignment: .center)
+                        let monthLabel = self.createLabel(withFrame: CGRect.init(x: logBoxPointX, y: 0.0, width: (Double((numberOfDaysInMonth/numberOfLogsInColumn)) * Double(logBoxSize.width)) + margin, height: valueStandardHeightForTimeView), text: self.monthNameForMonthIndex(monthIndex: monthIndex), font: self.monthLabelTitleFont, textColor: self.monthLabelTitleColor, textAlignment: .center)
                         self.addSubview(monthLabel)
                     }
                     
@@ -279,7 +284,7 @@ public class WHWorkView : UIView {
     
     //MARK: Update WorkButton based on the Contributions.
     fileprivate func updateWorkButtonAsPerTheContributions(WorkButton workButton: WHButton, Date whDate: WHDate) {
-        if !self.hasContributions() {
+        if self.hasContributions() {
             let contribution = self.hasContributionsOnThisDate(date: whDate.date!)
             if (contribution != nil) {
                 workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
@@ -342,14 +347,32 @@ public class WHWorkView : UIView {
         }
     }
     
-    //MARK: Contributions Check
+    //MARK: Contributions Helpers
     fileprivate func hasContributions() -> Bool {
-        return self.contributions.isEmpty
+        if self.contributions.isEmpty {
+            return false
+        }
+        return true
     }
     
     fileprivate func hasContributionsOnThisDate(date: Date) -> WHContribution? {
-        let results = self.contributions.filter { $0.date.compare(.isSameDay(as: date)) }
-        return results.isEmpty ? nil : results.first!
+        if self.hasContributions() {
+            let key = self.dateFormatter.string(from: date)
+            if let contribution = self.filteredDates[key] {
+                return contribution
+            }
+        }
+        return nil
+    }
+    
+    fileprivate func convertContributionsForFilteredDate() {
+        self.filteredDates.removeAll()
+        if self.hasContributions() {
+            self.contributions.forEach({ (contribution) in
+                let key = self.dateFormatter.string(from: contribution.date)
+                self.filteredDates[key] = contribution
+            })
+        }
     }
     
     //MARK: Setup
@@ -357,6 +380,7 @@ public class WHWorkView : UIView {
     public func reload(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
         self.cleanWorkView()
         self.contributions.append(contentsOf: contributions)
+        self.convertContributionsForFilteredDate()
         self.addLogColors()
         self.addWorkLogs(forYear: year)
     }

@@ -101,7 +101,7 @@ class ViewController: UIViewController {
         let results = self.contributions.filter { $0.date.compare(.isSameYear(as: Date(year: year, month: 1, day: 1))) }
         if !results.isEmpty {
             for contribution in results {
-                print("\n\(contribution.date)")
+                print("\nDate: \(contribution.date) | percentageOfWork: \(contribution.percentageOfWork)")
             }
         } else {
             print("\n No Sample Data Available.")
