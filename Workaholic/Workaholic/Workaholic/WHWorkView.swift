@@ -66,7 +66,7 @@ public class WHWorkView : UIView {
         super.init(frame: frame)
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
-        self.layer.borderColor = workViewBorderColor
+        self.layer.borderColor = self.workViewBorderColor
     }
     
     required public init?(coder aDecoder: NSCoder) {
@@ -144,7 +144,7 @@ public class WHWorkView : UIView {
                 for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
 
                     let whDate = WHDate.init(Date: Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex), Day: columnIndex, Month: previousMonth!, Year: previousYear!)
-                    let workButton = createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
+                    let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
                     
@@ -174,7 +174,7 @@ public class WHWorkView : UIView {
                 for columnIndex in 1...numberOfDaysInMonth {
                     
                     let whDate = WHDate.init(Date: Date(year: (dateOfMonth?.year)!, month: monthIndex, day: columnIndex), Day: columnIndex, Month: currentMonth!, Year: currentYear!)
-                    let workButton = createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
+                    let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
                     
@@ -313,7 +313,7 @@ public class WHWorkView : UIView {
         self.addSubview(helperView)
 
         //Label: Less
-        let helpLabelLess = createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: self.lessLabelTitleFont, textColor: lessLabelTitleColor, textAlignment: .left)
+        let helpLabelLess = self.createLabel(withFrame:  CGRect.init(x: 0.0, y: 0.0 + margin, width: 25.0, height: 10.0), text: "Less", font: self.lessLabelTitleFont, textColor: lessLabelTitleColor, textAlignment: .left)
         helperView.addSubview(helpLabelLess)
         helpLabelLess.center = CGPoint.init(x: helpLabelLess.center.x, y: helperView.frame.size.height/2.0)
         
@@ -329,7 +329,7 @@ public class WHWorkView : UIView {
         }
         
         //Label: More
-        let helpLabelMore = createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: self.moreLabelTitleFont, textColor: moreLabelTitleColor, textAlignment: .right)
+        let helpLabelMore = self.createLabel(withFrame:  CGRect.init(x: helperBoxPointX, y: 0.0, width: 25.0, height: 10.0), text: "More", font: self.moreLabelTitleFont, textColor: moreLabelTitleColor, textAlignment: .right)
         helperView.addSubview(helpLabelMore)
         helpLabelMore.center = CGPoint.init(x: helpLabelMore.center.x, y: helperView.frame.size.height/2.0)
     }
@@ -344,11 +344,11 @@ public class WHWorkView : UIView {
     
     //MARK: Contributions Check
     fileprivate func hasContributions() -> Bool {
-        return contributions.isEmpty
+        return self.contributions.isEmpty
     }
     
     fileprivate func hasContributionsOnThisDate(date: Date) -> WHContribution? {
-        let results = contributions.filter { $0.date.compare(.isSameDay(as: date)) }
+        let results = self.contributions.filter { $0.date.compare(.isSameDay(as: date)) }
         return results.isEmpty ? nil : results.first!
     }
     
