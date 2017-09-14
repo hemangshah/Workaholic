@@ -216,8 +216,8 @@ public class WHWorkView : UIView {
     
     //MARK: Actions
     @objc fileprivate func actionDayTapped(sender: WHButton) -> Void {                
-        if onWorkLogTapCompletion != nil {
-            onWorkLogTapCompletion!(sender.workDate!)
+        if self.onWorkLogTapCompletion != nil {
+            self.onWorkLogTapCompletion!(sender.workDate!)
         }
     }
     
@@ -231,26 +231,26 @@ public class WHWorkView : UIView {
     fileprivate func colorForWorkPercentage(percentage: WorkPecentage) -> UIColor {
         switch percentage {
         case .hundread:
-            return hundreadPercentageLoggedColor
+            return self.hundreadPercentageLoggedColor
         case .seventyFive:
-            return seventy5percentageLoggedColor
+            return self.seventy5percentageLoggedColor
         case .fifty:
-            return fiftyPercentageLoggedColor
+            return self.fiftyPercentageLoggedColor
         case .twentyFive:
-            return twenty5percentageLoggedColor
+            return self.twenty5percentageLoggedColor
         default:
-            return zeroPercentageLoggedColor
+            return self.zeroPercentageLoggedColor
         }
     }
     
     //MARK: Add Logging Colors[0% to 100%]
     fileprivate func addLogColors() -> Void {
-        logColors.clean()
-        logColors.append(zeroPercentageLoggedColor)
-        logColors.append(twenty5percentageLoggedColor)
-        logColors.append(fiftyPercentageLoggedColor)
-        logColors.append(seventy5percentageLoggedColor)
-        logColors.append(hundreadPercentageLoggedColor)
+        self.logColors.clean()
+        self.logColors.append(zeroPercentageLoggedColor)
+        self.logColors.append(twenty5percentageLoggedColor)
+        self.logColors.append(fiftyPercentageLoggedColor)
+        self.logColors.append(seventy5percentageLoggedColor)
+        self.logColors.append(hundreadPercentageLoggedColor)
     }
     
     //MARK: Create Button
@@ -279,8 +279,8 @@ public class WHWorkView : UIView {
     
     //MARK: Update WorkButton based on the Contributions.
     fileprivate func updateWorkButtonAsPerTheContributions(WorkButton workButton: WHButton, Date whDate: WHDate) {
-        if !hasContributions() {
-            let contribution = hasContributionsOnThisDate(date: whDate.date!)
+        if !self.hasContributions() {
+            let contribution = self.hasContributionsOnThisDate(date: whDate.date!)
             if (contribution != nil) {
                 workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
             }
@@ -289,7 +289,7 @@ public class WHWorkView : UIView {
     
     //MARK: Show/Hide Days Value In WorkButton
     fileprivate func updateWorkButtonToShowDaysLabel(WorkButton workButton: WHButton, Day day: Int) {
-        if showDaysInWorkView {
+        if self.showDaysInWorkView {
             workButton.setTitleColor(.black, for: .normal)
             workButton.titleLabel?.font = self.daysNumberLabelTitleFont
             workButton.setTitle(String(day), for: .normal)
@@ -336,7 +336,7 @@ public class WHWorkView : UIView {
     
     //MARK: Helpers
     fileprivate func cleanWorkView() -> Void {
-        contributions.clean()
+        self.contributions.clean()
         for allTheSubviews in self.subviews {
             allTheSubviews.removeFromSuperview()
         }
@@ -355,7 +355,7 @@ public class WHWorkView : UIView {
     //MARK: Setup
     ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
     public func reload(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
-        cleanWorkView()
+        self.cleanWorkView()
         self.contributions.append(contentsOf: contributions)
         self.addLogColors()
         self.addWorkLogs(forYear: year)
