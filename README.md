@@ -23,8 +23,8 @@ A Github's like work contribution timeline.
 - [x] Correct UI.
 - [x] Selectable Timeline.
 - [x] Orientation Change Support.
-- [ ] Customization Options.
-- [ ] Customize Fonts, Text/ Background/ Log Colors.
+- [x] Customization Options.
+- [x] Customize Fonts, Text/ Background/ Log Colors.
 - [ ] Show/Hide Day Numbers in Log Boxes.
 - [ ] Localize Months and Days.
 - [ ] Remove Dependancies of 3rd Party classes.
