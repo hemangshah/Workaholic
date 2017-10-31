@@ -13,6 +13,7 @@ A Github's like work contribution timeline.
 
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-1.png">
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-2.png">
+<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/Happy-Halloween.png">
 
 # ToDo[s]
 
