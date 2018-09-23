@@ -2,33 +2,18 @@
 
 A Github's like work contribution timeline.
 
-![Build Status](https://travis-ci.org/hemangshah/Workaholic.svg?branch=master)
-![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
-![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)
-![Swift 4.x](https://img.shields.io/badge/Swift-4.x-blue.svg)
-![Swift 3.x](https://img.shields.io/badge/Swift-3.x-blue.svg)
-![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)
+[![Build Status](https://travis-ci.org/hemangshah/Workaholic.svg?branch=master)](https://travis-ci.org/hemangshah/Workaholic)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://github.com/hemangshah/Workaholic/blob/master/LICENSE)
+[![Platform](https://img.shields.io/badge/Platforms-iOS-red.svg)](https://www.apple.com/in/ios/)
+[![Swift 4.x](https://img.shields.io/badge/Swift-4.x-blue.svg)](https://swift.org/)
+[![MadeWithLove](https://img.shields.io/badge/Made%20with%20%E2%9D%A4-India-green.svg)](https://madewithlove.org.in/)
 [![Awesome-Swift](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/matteocrippa/awesome-swift/)
 
 <img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-1.png">
-<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/WHLandscape-2.png">
-<img src="https://github.com/hemangshah/Workaholic/blob/master/Screenshots/Happy-Halloween.png">
 
 # ToDo[s]
 
-- [x] Dynamic Log Box for No. of days in a month.
-- [x] Dynamic Months label width for No. of days in a month.
-- [x] Show Days to Left.
-- [x] Orientation Support. Supports UI for Portrait / Landscape.
-- [x] Correct UI.
-- [x] Selectable Timeline.
-- [x] Orientation Change Support.
-- [x] Customization Options.
-- [x] Customize Fonts, Text/ Background/ Log Colors.
-- [x] Localize Months and Days. [Note: Use workViewDays or workViewMonths to provide localized Months and Days ]
-- [x] Show/Hide Day Numbers in Log Boxes.
 - [ ] Remove Dependancies of 3rd Party classes.
-- [ ] Code Refactoring.
 
 You can [watch](https://github.com/hemangshah/Workaholic/subscription) to **Workaholic** to see continuous updates. Stay tuned.
 
