@@ -8,19 +8,19 @@
 
 import UIKit
 
-fileprivate let valueStandardWidthForHelperView: Double = 65.0
-fileprivate let valueStandardHeightForTimeView: Double = 25.0
-fileprivate let valueStandardHeightForHelperView: Double = 25.0
+private let valueStandardWidthForHelperView: Double = 65.0
+private let valueStandardHeightForTimeView: Double = 25.0
+private let valueStandardHeightForHelperView: Double = 25.0
 
 public class WHWorkView : UIView {
     
-    fileprivate var logColors = Array<UIColor>()
-    fileprivate var contributions = Array<WHContribution>()
+    fileprivate var logColors = [UIColor]()
+    fileprivate var contributions = [WHContribution]()
     fileprivate var dateFormatter = DateFormatter.init()
-    fileprivate var filteredDates: Dictionary<String, WHContribution> = Dictionary.init()
+    fileprivate var filteredDates = [String: WHContribution?]()
     
     ///Get Taps when user taps on a day in WorkView.
-    public var onWorkLogTapCompletion:((_ date: WHDate) -> ())? = nil
+    public var onWorkLogDateTapCompletion:((_ date: WHDate?, _ contribution: WHContribution?) -> ())? = nil
     
     ///Set color when there's no log history.
     public var zeroPercentageLoggedColor: UIColor = UIColor.colorFromRGB(r: 238.0, g: 238.0, b: 238.0, alpha: 1.0)
@@ -35,11 +35,29 @@ public class WHWorkView : UIView {
     ///Set border color for WorkView.
     public var workViewBorderColor = UIColor.lightGray.cgColor
     
-    ///Set days for WorkView (at left). Usage: to set localize days.
-    public var workViewDays = ["Mon", "Wed", "Fri"]
-    ///Set months for WorkView (at top). Usage: to set localize months.
-    public var workViewMonths = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-    
+    ///Set days for WorkView (at left). Usage: Helpful to set localized days.
+    public var workViewDays: [String] {
+        get {
+            return ["Mon", "Wed", "Fri"]
+        }
+        set {
+            if newValue.count < 3 || newValue.count > 3 {
+                fatalError("`workViewDays` should be equal to 3. Example: [\"Mon\", \"Wed\", \"Fri\"]")
+            }
+        }
+    }
+    ///Set months for WorkView (at top). Usage: Helpful to set localized months.
+    public var workViewMonths: [String] {
+        get {
+            return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+        }
+        set {
+            if newValue.count < 12 || newValue.count > 12 {
+                fatalError("`workViewMonths` should be equal to 12. Example: [\"Jan\", \"Feb\", \"Mar\", \"Apr\", \"May\", \"Jun\", \"Jul\", \"Aug\", \"Sep\", \"Oct\", \"Nov\", \"Dec\"]")
+            }
+        }
+    }
+ 
     ///Days Label Title Color.
     public var daysLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
     ///Months Label Title Color.
@@ -49,15 +67,15 @@ public class WHWorkView : UIView {
     ///More Label Title Color.
     public var moreLabelTitleColor = UIColor.colorFromRGB(r: 118.0, g: 118.0, b: 118.0, alpha: 1.0)
     
-    ///Days Label Title Font
+    ///Days Label Title Font.
     public var daysLabelTitleFont = UIFont.systemFont(ofSize: 5.0)
-    ///Months Label Title Font
+    ///Months Label Title Font.
     public var monthLabelTitleFont = UIFont.systemFont(ofSize: 10.0)
-    ///More Label Title Font
+    ///More Label Title Font.
     public var moreLabelTitleFont = UIFont.systemFont(ofSize: 8.0)
-    ///Less Label Title Font
+    ///Less Label Title Font.
     public var lessLabelTitleFont = UIFont.systemFont(ofSize: 8.0)
-    ///Day Number Label Title Font
+    ///Day Number Label Title Font.
     public var daysNumberLabelTitleFont = UIFont.systemFont(ofSize: 3.0)
     
     ///Show Days In WorkView.
@@ -66,16 +84,25 @@ public class WHWorkView : UIView {
     //MARK: Init with Frame
     override public init(frame: CGRect) {
         super.init(frame: frame)
+        self.setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override public func awakeFromNib() {
+        super.awakeFromNib()
+        self.setup()
+    }
+    
+    fileprivate func setup() {
         self.backgroundColor = UIColor.white
         self.layer.borderWidth = 0.5
         self.layer.borderColor = self.workViewBorderColor
         self.dateFormatter.dateFormat = "dd-MM-yyyy"
         //self.dateFormatter.calendar = Calendar.current
         //self.dateFormatter.timeZone = Calendar.current.timeZone
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: Add Workaholic View
@@ -220,9 +247,11 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Actions
-    @objc fileprivate func actionDayTapped(sender: WHButton) -> Void {                
-        if self.onWorkLogTapCompletion != nil {
-            self.onWorkLogTapCompletion!(sender.workDate!)
+    @objc fileprivate func actionDayTapped(sender: WHButton) {
+        if let date = sender.workDate?.date, let contribution = self.hasContributionsOnThisDate(date: date) {
+            self.onWorkLogDateTapCompletion?(sender.workDate, contribution)
+        } else {
+            self.onWorkLogDateTapCompletion?(sender.workDate, nil)
         }
     }
     
@@ -233,29 +262,24 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Color for Work Percentage
-    fileprivate func colorForWorkPercentage(percentage: WorkPecentage) -> UIColor {
+    fileprivate func colorForWorkPercentage(percentage: WorkCompletedPercentage) -> UIColor {
         switch percentage {
-        case .hundread:
-            return self.hundreadPercentageLoggedColor
-        case .seventyFive:
-            return self.seventy5percentageLoggedColor
-        case .fifty:
-            return self.fiftyPercentageLoggedColor
-        case .twentyFive:
-            return self.twenty5percentageLoggedColor
-        default:
-            return self.zeroPercentageLoggedColor
+        case .hundread: return self.hundreadPercentageLoggedColor
+        case .seventyFive: return self.seventy5percentageLoggedColor
+        case .fifty: return self.fiftyPercentageLoggedColor
+        case .twentyFive: return self.twenty5percentageLoggedColor
+        default: return self.zeroPercentageLoggedColor
         }
     }
     
     //MARK: Add Logging Colors[0% to 100%]
-    fileprivate func addLogColors() -> Void {
+    fileprivate func addLogColors() {
         self.logColors.clean()
-        self.logColors.append(zeroPercentageLoggedColor)
-        self.logColors.append(twenty5percentageLoggedColor)
-        self.logColors.append(fiftyPercentageLoggedColor)
-        self.logColors.append(seventy5percentageLoggedColor)
-        self.logColors.append(hundreadPercentageLoggedColor)
+        self.logColors.append(self.zeroPercentageLoggedColor)
+        self.logColors.append(self.twenty5percentageLoggedColor)
+        self.logColors.append(self.fiftyPercentageLoggedColor)
+        self.logColors.append(self.seventy5percentageLoggedColor)
+        self.logColors.append(self.hundreadPercentageLoggedColor)
     }
     
     //MARK: Create Button
@@ -263,7 +287,7 @@ public class WHWorkView : UIView {
         let workButton = WHButton()
         workButton.frame = CGRect.init(origin: origin, size: size)
         workButton.addTarget(self, action: #selector(actionDayTapped), for: .touchUpInside)
-        workButton.backgroundColor = zeroPercentageLoggedColor
+        workButton.backgroundColor = self.zeroPercentageLoggedColor
         self.addSubview(workButton)
         workButton.workDate = whDate
         return workButton
@@ -284,11 +308,8 @@ public class WHWorkView : UIView {
     
     //MARK: Update WorkButton based on the Contributions.
     fileprivate func updateWorkButtonAsPerTheContributions(WorkButton workButton: WHButton, Date whDate: WHDate) {
-        if self.hasContributions() {
-            let contribution = self.hasContributionsOnThisDate(date: whDate.date!)
-            if (contribution != nil) {
-                workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution!.percentageOfWork)
-            }
+        if let date = whDate.date, let contribution = self.hasContributionsOnThisDate(date: date) {
+            workButton.backgroundColor = self.colorForWorkPercentage(percentage: contribution.percentageOfWork)
         }
     }
     
@@ -304,9 +325,9 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Add Helper UI [Less/More]
-    fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint: CGPoint, withLogBoxSize storedLogBoxSize: CGSize) -> Void {
-        let margin:Double = 2.0
-        let numberOfColors = logColors.count
+    fileprivate func addHelper(withLogBoxPoints storedLogBoxPoint: CGPoint, withLogBoxSize storedLogBoxSize: CGSize) {
+        let margin: Double = 2.0
+        let numberOfColors = self.logColors.count
         
         let remainingDifference = (self.height() - Double(storedLogBoxPoint.y))
         let helperViewHeight = (remainingDifference > valueStandardHeightForHelperView) ? valueStandardHeightForHelperView : remainingDifference
@@ -340,7 +361,7 @@ public class WHWorkView : UIView {
     }
     
     //MARK: Helpers
-    fileprivate func cleanWorkView() -> Void {
+    fileprivate func cleanWorkView() {
         self.contributions.clean()
         for allTheSubviews in self.subviews {
             allTheSubviews.removeFromSuperview()
@@ -349,39 +370,34 @@ public class WHWorkView : UIView {
     
     //MARK: Contributions Helpers
     fileprivate func hasContributions() -> Bool {
-        if self.contributions.isEmpty {
-            return false
-        }
-        return true
+        return self.contributions.isEmpty ? false : true
     }
     
     fileprivate func hasContributionsOnThisDate(date: Date) -> WHContribution? {
-        if self.hasContributions() {
-            let key = self.dateFormatter.string(from: date)
-            if let contribution = self.filteredDates[key] {
-                return contribution
-            }
-        }
-        return nil
+        let key = self.dateFormatter.string(from: date)
+        return self.filteredDates[key] ?? nil
     }
     
     fileprivate func convertContributionsForFilteredDate() {
         self.filteredDates.removeAll()
-        if self.hasContributions() {
-            self.contributions.forEach({ (contribution) in
-                let key = self.dateFormatter.string(from: contribution.date)
-                self.filteredDates[key] = contribution
-            })
-        }
+        self.contributions.forEach({ (contribution) in
+            let key = self.dateFormatter.string(from: contribution.date)
+            self.filteredDates[key] = contribution
+        })
     }
     
     //MARK: Setup
     ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
-    public func reload(withYear year: Int, withContributions contributions: Array<WHContribution>) -> Void {
+    public func reload(year: Int, contributions: [WHContribution]) {
         self.cleanWorkView()
         self.contributions.append(contentsOf: contributions)
         self.convertContributionsForFilteredDate()
         self.addLogColors()
         self.addWorkLogs(forYear: year)
+    }
+    
+    ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
+    public func reload(contributions: [WHContribution]) {
+        self.reload(year: Date.today().year, contributions: contributions)
     }
 }

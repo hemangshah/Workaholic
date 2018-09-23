@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum WorkPecentage {
+public enum WorkCompletedPercentage {
     case zero, twentyFive, fifty, seventyFive, hundread
 }
 
@@ -18,12 +18,13 @@ public enum WorkPecentage {
 public class WHContribution {
     
     ///Set the contribution date.
-    public var date: Date = Date()
+    public var date = Date()
     
     ///Based on your requirements and calculations you set the total work contributions by a user on a particular date. Default: zero percentage
-    public var percentageOfWork: WorkPecentage = .zero
+    public var percentageOfWork: WorkCompletedPercentage = .zero
     
-    public init (Date date: Date, WorkPercentage workPercentage: WorkPecentage) {
+    ///Init.
+    public init(date: Date, workPercentage: WorkCompletedPercentage) {
         self.date = date
         self.percentageOfWork = workPercentage
     }
