@@ -20,12 +20,12 @@ public class WHContribution {
     ///Set the contribution date.
     public var date = Date()
     
-    ///Based on your requirements and calculations you set the total work contributions by a user on a particular date. Default: zero percentage
+    ///Based on your requirements and calculations you should set the total work contributions by a user on a particular date. Default: zero percentage.
     public var percentageOfWork: WorkCompletedPercentage = .zero
     
     ///Init.
-    public init(date: Date, workPercentage: WorkCompletedPercentage) {
+    public init(date: Date, workCompletedPercentage: WorkCompletedPercentage) {
         self.date = date
-        self.percentageOfWork = workPercentage
+        self.percentageOfWork = workCompletedPercentage
     }
 }

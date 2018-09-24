@@ -12,19 +12,18 @@ class ViewController: UIViewController {
     
     @IBOutlet var workView: WHWorkView!
     
-    private let year = Date.init().year
     private lazy var contributions: [WHContribution] = {
         var array = [WHContribution]()
-        array.append(WHContribution(date: Date.randomDates(days: 1, inYear: year), workPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDates(days: 2, inYear: year), workPercentage: .fifty))
-        array.append(WHContribution(date: Date.randomDates(days: 3, inYear: year), workPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDates(days: 4, inYear: year), workPercentage: .fifty))
-        array.append(WHContribution(date: Date.randomDates(days: 5, inYear: year), workPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDates(days: 6, inYear: year), workPercentage: .seventyFive))
-        array.append(WHContribution(date: Date.randomDates(days: 7, inYear: year), workPercentage: .hundread))
-        array.append(WHContribution(date: Date.randomDates(days: 8, inYear: year), workPercentage: .seventyFive))
-        array.append(WHContribution(date: Date.randomDates(days: 9, inYear: year), workPercentage: .hundread))
-        array.append(WHContribution(date: Date.randomDates(days: 10, inYear: year), workPercentage: .zero))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .fifty))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .fifty))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .seventyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .hundread))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .seventyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .hundread))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .zero))
         return array
     }()
     
@@ -38,7 +37,7 @@ class ViewController: UIViewController {
         
         //Always, reload workView in viewDidAppear.
         
-        self.workView.reload(year: year, contributions: contributions)
+        self.workView.reload(year: 2018, contributions: contributions)
 
         self.workView.onWorkLogDateTapCompletion = { (whDate, whContribution) in
             if let date = whDate?.date, let contribution = whContribution {
@@ -48,5 +47,28 @@ class ViewController: UIViewController {
             }
         }
         
+    }
+}
+
+extension Date {
+    static func randomDate(inYear year: Int) -> Date {
+        let gregorian = Calendar(identifier: .gregorian)
+        let randomDay = arc4random_uniform(UInt32(25))
+        let randomMonth = arc4random_uniform(UInt32(12))
+        let randomHour = arc4random_uniform(UInt32(23))
+        let randomMinute = arc4random_uniform(UInt32(23))
+        let randomSecond = arc4random_uniform(UInt32(23))
+        
+        let offsetComponents = NSDateComponents()
+        offsetComponents.day = Int(randomDay)
+        offsetComponents.month = Int(randomMonth)
+        offsetComponents.year = Int(year)
+        offsetComponents.hour = Int(randomHour)
+        offsetComponents.minute = Int(randomMinute)
+        offsetComponents.second = Int(randomSecond)
+        
+        let randomeDate = gregorian.date(from: offsetComponents as DateComponents)
+        
+        return randomeDate!
     }
 }

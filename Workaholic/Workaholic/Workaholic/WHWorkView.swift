@@ -109,21 +109,21 @@ public class WHWorkView : UIView {
     fileprivate func addWorkLogs(forYear logsForYear: Int) -> Void {
 
         let nowYear = Date(year: logsForYear, month: 1, day: 1)
-        let nowYearString = nowYear.toString(format: .isoYear)
+        let nowYearString = String(nowYear.wh_year)
         
         let initialMargin: Double = 35.0
         let margin: Double = 2.0
-        let numberOfLogsInColumn = nowYear.numberOfDaysInWeek()
+        let numberOfLogsInColumn = nowYear.wh_numberOfDaysInWeek()
         
         var logBoxPointX: Double = Double(initialMargin + margin)
         var logBoxPointY: Double = valueStandardHeightForTimeView + margin
         
         //Start - Calculating Box Sizes.
         //We know that there will always 12 months but for a change we are using a method to calculate total months.
-        let totalMonths: NSInteger = nowYear.numberOfMonthsInYear()
+        let totalMonths: NSInteger = nowYear.wh_numberOfMonthsInYear()
 
         //Total numbers of Columns [Log Boxes] in each Row.
-        let numberOfColumnsInEachRow: Double = Double(nowYear.numberOfDaysInYear()/numberOfLogsInColumn)
+        let numberOfColumnsInEachRow: Double = Double(nowYear.wh_numberOfDaysInYear()/numberOfLogsInColumn)
 
         //Calculate Width & Height of Log Boxes. We are taking the floor value to fixed the space.
         let logBoxWidthAndHeight: Double = floor(((self.width() - ((numberOfColumnsInEachRow * margin) + logBoxPointX))/numberOfColumnsInEachRow))
@@ -164,16 +164,16 @@ public class WHWorkView : UIView {
             
             if monthIndex == 0 {
 
-                var remainingDays = (nowYear.weekdayDiffence() - 1)
+                var remainingDays = (nowYear.wh_weekdayDiffence() - 1)
                 if remainingDays <= 0 {
                     remainingDays = 7
                 }
                 let previousYearDate = nowYear - remainingDays.days
-                let previousYear = previousYearDate?.year
-                let previousMonth = previousYearDate?.month
+                let previousYear = previousYearDate?.wh_year
+                let previousMonth = previousYearDate?.wh_month
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
-                for columnIndex in previousYearDate!.day...previousYearDate!.numberOfDaysInMonth() {
+                for columnIndex in previousYearDate!.wh_day...previousYearDate!.wh_numberOfDaysInMonth() {
                     let previousYearDate = Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex)
                     let whDate = WHDate.init(withDate: previousYearDate, day: columnIndex, month: previousMonth!, Year: previousYear!, comparableDateAsString: self.dateFormatter.string(from: previousYearDate))
                     let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
@@ -197,9 +197,9 @@ public class WHWorkView : UIView {
             } else {
                 
                 let dateOfMonth = Date.init(fromString: "01-\(monthIndex)-\(nowYearString)", format: .custom("dd-MM-yyyy"))
-                let numberOfDaysInMonth = dateOfMonth!.numberOfDaysInMonth()
-                let currentYear = dateOfMonth?.year
-                let currentMonth = dateOfMonth?.month
+                let numberOfDaysInMonth = dateOfMonth!.wh_numberOfDaysInMonth()
+                let currentYear = dateOfMonth?.wh_year
+                let currentMonth = dateOfMonth?.wh_month
                 
                 //------------------------------------------------------------------------
                 //Start – Internal Loop
@@ -398,6 +398,6 @@ public class WHWorkView : UIView {
     
     ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
     public func reload(contributions: [WHContribution]) {
-        self.reload(year: Date.today().year, contributions: contributions)
+        self.reload(year: Date.today().wh_year, contributions: contributions)
     }
 }
