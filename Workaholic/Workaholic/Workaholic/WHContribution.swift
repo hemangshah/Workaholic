@@ -8,24 +8,15 @@
 
 import Foundation
 
+///Work completed percentage divided in 5 categories to showcase user's work contribution percentage.
 public enum WorkCompletedPercentage {
     case zero, twentyFive, fifty, seventyFive, hundread
 }
 
-/**
- You can always subclass WHContributions for your own needs.
-*/
-public class WHContribution {
-    
+///You can always subclass WHContributions for your own needs.
+public struct WHContribution {
     ///Set the contribution date.
     public var date = Date()
-    
-    ///Based on your requirements and calculations you should set the total work contributions by a user on a particular date. Default: zero percentage.
+    ///Set work completed percentage as per a user contribution on a particular date. Default: zero (No contribution).
     public var percentageOfWork: WorkCompletedPercentage = .zero
-    
-    ///Init.
-    public init(date: Date, workCompletedPercentage: WorkCompletedPercentage) {
-        self.date = date
-        self.percentageOfWork = workCompletedPercentage
-    }
 }

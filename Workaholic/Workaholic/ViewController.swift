@@ -14,16 +14,16 @@ class ViewController: UIViewController {
     
     private lazy var contributions: [WHContribution] = {
         var array = [WHContribution]()
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .fifty))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .fifty))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .twentyFive))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .seventyFive))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .hundread))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .seventyFive))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .hundread))
-        array.append(WHContribution(date: Date.randomDate(inYear: 2018), workCompletedPercentage: .zero))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .fifty))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .fifty))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .twentyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .seventyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .hundread))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .seventyFive))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .hundread))
+        array.append(WHContribution(date: Date.randomDate(inYear: 2018), percentageOfWork: .zero))
         return array
     }()
     

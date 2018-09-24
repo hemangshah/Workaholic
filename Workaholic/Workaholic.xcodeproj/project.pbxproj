@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		6B7320D12158C55E002E9A7D /* WHDateHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7320D02158C55E002E9A7D /* WHDateHelpers.swift */; };
-		F104724F1F3C89AF00B50AD6 /* WHExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */; };
 		F10472511F3C8C9F00B50AD6 /* WHContribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10472501F3C8C9F00B50AD6 /* WHContribution.swift */; };
 		F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11226421EED5BB8004EBE81 /* WHButton.swift */; };
 		F1429FBE1EED685E006BBCF4 /* WHDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1429FBD1EED685E006BBCF4 /* WHDate.swift */; };
@@ -22,7 +21,6 @@
 
 /* Begin PBXFileReference section */
 		6B7320D02158C55E002E9A7D /* WHDateHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHDateHelpers.swift; sourceTree = "<group>"; };
-		F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHExtensions.swift; sourceTree = "<group>"; };
 		F10472501F3C8C9F00B50AD6 /* WHContribution.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHContribution.swift; sourceTree = "<group>"; };
 		F11226421EED5BB8004EBE81 /* WHButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WHButton.swift; sourceTree = "<group>"; };
 		F1429FBD1EED685E006BBCF4 /* WHDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WHDate.swift; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				F11226421EED5BB8004EBE81 /* WHButton.swift */,
 				F10472501F3C8C9F00B50AD6 /* WHContribution.swift */,
 				F1429FBD1EED685E006BBCF4 /* WHDate.swift */,
-				F104724E1F3C89AF00B50AD6 /* WHExtensions.swift */,
 				6B7320D02158C55E002E9A7D /* WHDateHelpers.swift */,
 			);
 			path = Workaholic;
@@ -164,7 +161,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1BBB2D11EE536B900DF8157 /* ViewController.swift in Sources */,
-				F104724F1F3C89AF00B50AD6 /* WHExtensions.swift in Sources */,
 				F11226431EED5BB8004EBE81 /* WHButton.swift in Sources */,
 				F10472511F3C8C9F00B50AD6 /* WHContribution.swift in Sources */,
 				F1429FBE1EED685E006BBCF4 /* WHDate.swift in Sources */,

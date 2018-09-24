@@ -175,7 +175,7 @@ public class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in previousYearDate!.wh_day...previousYearDate!.wh_numberOfDaysInMonth() {
                     let previousYearDate = Date(year: (previousYear)!, month: (previousMonth)!, day: columnIndex)
-                    let whDate = WHDate.init(withDate: previousYearDate, day: columnIndex, month: previousMonth!, Year: previousYear!, comparableDateAsString: self.dateFormatter.string(from: previousYearDate))
+                    let whDate = WHDate.init(date: previousYearDate, day: columnIndex, month: previousMonth!, year: previousYear!, comparableDate: self.dateFormatter.string(from: previousYearDate))
                     let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
@@ -205,7 +205,7 @@ public class WHWorkView : UIView {
                 //Start – Internal Loop
                 for columnIndex in 1...numberOfDaysInMonth {
                     let currentYearDate = Date(year: currentYear!, month: currentMonth!, day: columnIndex)
-                    let whDate = WHDate.init(withDate: currentYearDate, day: columnIndex, month: currentMonth!, Year: currentYear!, comparableDateAsString: self.dateFormatter.string(from: currentYearDate))
+                    let whDate = WHDate.init(date: currentYearDate, day: columnIndex, month: currentMonth!, year: currentYear!, comparableDate: self.dateFormatter.string(from: currentYearDate))
                     let workButton = self.createWHButton(withOrigin: CGPoint.init(x: Double(logBoxPointX), y: Double(logBoxPointY)), size: CGSize.init(width: Double(logBoxSize.width), height: Double(logBoxSize.height)), Date: whDate)
                     
                     self.updateWorkButtonAsPerTheContributions(WorkButton: workButton, Date: whDate)
@@ -399,5 +399,31 @@ public class WHWorkView : UIView {
     ///Once WHWorkView has been defined and set with necessory properties you can should call this function to invoke WHWorkView.
     public func reload(contributions: [WHContribution]) {
         self.reload(year: Date.today().wh_year, contributions: contributions)
+    }
+}
+
+fileprivate extension UIColor {
+    class func colorFromRGB(r: CGFloat, g: CGFloat, b: CGFloat, alpha: CGFloat) -> UIColor {
+        return UIColor.init(red: r/255, green: g/255, blue: b/255, alpha: alpha)
+    }
+}
+
+fileprivate extension UIView {
+    func width() -> Double {
+        return Double(self.frame.size.width)
+    }
+    
+    func height() -> Double {
+        return Double(self.frame.size.height)
+    }
+    
+    func size() -> CGSize {
+        return self.frame.size
+    }
+}
+
+fileprivate extension Array {
+    mutating func clean() {
+        self.removeAll()
     }
 }
